@@ -22,15 +22,20 @@ namespace DNS_gyro_Testbench_Interfacer
 
         private Object serialLock = new Object();
         string serialData = " ";
+
+        private List<string> contents = new List<string>();
+        private const int MAX = 50;
+
         private bool booted = false;
+
 
         public Form1()
         {
 
-            var timer = new System.Windows.Forms.Timer();
-            timer.Tick += new EventHandler(UpdateConsole);
-            timer.Interval = 100; //100 ms
-            timer.Start();
+            //var timer = new System.Windows.Forms.Timer();
+            //timer.Tick += new EventHandler(update_Console);
+            //timer.Interval = 100; //100 ms
+            //timer.Start();
 
 
 
@@ -45,43 +50,43 @@ namespace DNS_gyro_Testbench_Interfacer
             _serialPort.BaudRate = 230400;
             _serialPort.PortName = "COM4";
             _serialPort.Close();
-            console.Text = "This is a TextBox control.";
+            ComStatus.Text = "This is a TextBox control.";
 
             statusStrip1.Text = "Disconnected";
+
             foreach (string s in SerialPort.GetPortNames())
             {
                 comList.Items.Add(s);
             }
+            update_ComStatus(this, new EventArgs());
         }
 
         private void Baudrate_TextChanged(object sender, EventArgs e)
         {
             _serialPort.BaudRate = Int32.Parse(Baudrate.Text);
+            update_ComStatus(this, e);
         }
 
         private void comList_SelectChanged(object sender, EventArgs e)
         {
             _serialPort.PortName = comList.SelectedItem.ToString();
+            update_ComStatus(this, e);
         }
 
-        private void UpdateConsole(object sender, EventArgs e)
+        private void update_ComStatus(object sender, EventArgs e)
         {
-            if (!_continue)
-            {
-                console.Text = "Port: " + _serialPort.PortName
+                ComStatus.Text = "Port: " + _serialPort.PortName
                 + "\nBaudrate: " + _serialPort.BaudRate.ToString()
                 + "\nParity: " + _serialPort.Parity
                 + "\nDataBits: " + _serialPort.DataBits.ToString()
                 + "\nStopBits: " + _serialPort.StopBits
                 + "\nHandshake: " + _serialPort.Handshake;
-            }
-            else
-            {
-                lock (serialLock) { console.Text = serialData; }
-            }
-
         }
 
+        private void update_Console(object sender, EventArgs e)
+        {
+            if (_continue) {  }
+        }
         private void bt_serialConnect_Click(object sender, EventArgs e)
         {
 
@@ -112,18 +117,6 @@ namespace DNS_gyro_Testbench_Interfacer
             }
         }
 
-        private void serial_Read()
-        {
-            while (_continue)
-            {
-                try
-                {
-                    string message = _serialPort.ReadLine();
-                    lock (serialLock) { serialData = message.ToString(); }
-                }
-                catch (TimeoutException) { }
-            }
-        }
 
         private void bt_send_Click(object sender, EventArgs e)
         {
@@ -137,11 +130,62 @@ namespace DNS_gyro_Testbench_Interfacer
                 try
                 {
                     string message = _serialPort.ReadLine();
-                    lock (serialLock) { serialData = message.ToString(); }
+                    lock (serialLock) { serialData = message.ToString();
+
+                        switch (serialData[0])
+                        {
+                            case '2':
+                                set_Carrier_Text(serialData);
+                                break;
+                            default:
+                                set_Console_Text(serialData);
+                                break;
+                        }
+
+                        
+                    }
+                   
                 }
                 catch (TimeoutException) { }
             }
             _serialPort.Close();
+        }
+
+
+
+
+        delegate void SetTextCallback(string text);
+
+        private void set_Console_Text(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.Console.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(set_Console_Text);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                        this.Console.AppendText(text);                
+            }
+        }
+
+        private void set_Carrier_Text(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            if (this.Carrier.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(set_Carrier_Text);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                Carrier.Text = text;
+            }
         }
     }
 }

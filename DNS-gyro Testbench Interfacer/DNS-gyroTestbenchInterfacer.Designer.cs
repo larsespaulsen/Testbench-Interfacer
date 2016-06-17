@@ -31,7 +31,7 @@
             this.bt_serialConnect = new System.Windows.Forms.Button();
             this.Baudrate = new System.Windows.Forms.TextBox();
             this.sendMessage = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.Carrier = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
@@ -39,18 +39,19 @@
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
-            this.console = new System.Windows.Forms.RichTextBox();
+            this.ComStatus = new System.Windows.Forms.RichTextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.comList = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lb_Baudrate = new System.Windows.Forms.Label();
             this.bt_send = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.Console = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // bt_serialConnect
             // 
-            this.bt_serialConnect.Location = new System.Drawing.Point(12, 184);
+            this.bt_serialConnect.Location = new System.Drawing.Point(126, 144);
             this.bt_serialConnect.Name = "bt_serialConnect";
             this.bt_serialConnect.Size = new System.Drawing.Size(75, 23);
             this.bt_serialConnect.TabIndex = 0;
@@ -60,7 +61,7 @@
             // 
             // Baudrate
             // 
-            this.Baudrate.Location = new System.Drawing.Point(12, 158);
+            this.Baudrate.Location = new System.Drawing.Point(12, 144);
             this.Baudrate.Name = "Baudrate";
             this.Baudrate.Size = new System.Drawing.Size(75, 20);
             this.Baudrate.TabIndex = 1;
@@ -73,12 +74,12 @@
             this.sendMessage.Size = new System.Drawing.Size(401, 20);
             this.sendMessage.TabIndex = 2;
             // 
-            // textBox3
+            // Carrier
             // 
-            this.textBox3.Location = new System.Drawing.Point(257, 132);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 3;
+            this.Carrier.Location = new System.Drawing.Point(388, 415);
+            this.Carrier.Name = "Carrier";
+            this.Carrier.Size = new System.Drawing.Size(499, 20);
+            this.Carrier.TabIndex = 3;
             // 
             // textBox4
             // 
@@ -129,13 +130,15 @@
             this.textBox10.Size = new System.Drawing.Size(100, 20);
             this.textBox10.TabIndex = 10;
             // 
-            // console
+            // ComStatus
             // 
-            this.console.Location = new System.Drawing.Point(388, 44);
-            this.console.Name = "console";
-            this.console.Size = new System.Drawing.Size(499, 292);
-            this.console.TabIndex = 11;
-            this.console.Text = "";
+            this.ComStatus.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.ComStatus.Location = new System.Drawing.Point(93, 26);
+            this.ComStatus.Name = "ComStatus";
+            this.ComStatus.ReadOnly = true;
+            this.ComStatus.Size = new System.Drawing.Size(108, 95);
+            this.ComStatus.TabIndex = 11;
+            this.ComStatus.Text = "";
             // 
             // backgroundWorker1
             // 
@@ -161,7 +164,7 @@
             // lb_Baudrate
             // 
             this.lb_Baudrate.AutoSize = true;
-            this.lb_Baudrate.Location = new System.Drawing.Point(12, 139);
+            this.lb_Baudrate.Location = new System.Drawing.Point(12, 125);
             this.lb_Baudrate.Name = "lb_Baudrate";
             this.lb_Baudrate.Size = new System.Drawing.Size(50, 13);
             this.lb_Baudrate.TabIndex = 13;
@@ -179,22 +182,36 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 468);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 713);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(938, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1310, 22);
             this.statusStrip1.TabIndex = 0;
+            // 
+            // Console
+            // 
+            this.Console.BackColor = System.Drawing.Color.FloralWhite;
+            this.Console.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Console.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.Console.Location = new System.Drawing.Point(388, 26);
+            this.Console.MaxLength = 10;
+            this.Console.Name = "Console";
+            this.Console.ReadOnly = true;
+            this.Console.Size = new System.Drawing.Size(499, 308);
+            this.Console.TabIndex = 15;
+            this.Console.Text = "";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(938, 490);
+            this.ClientSize = new System.Drawing.Size(1310, 735);
+            this.Controls.Add(this.Console);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.bt_send);
             this.Controls.Add(this.lb_Baudrate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comList);
-            this.Controls.Add(this.console);
+            this.Controls.Add(this.ComStatus);
             this.Controls.Add(this.textBox10);
             this.Controls.Add(this.textBox9);
             this.Controls.Add(this.textBox8);
@@ -202,7 +219,7 @@
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.Carrier);
             this.Controls.Add(this.sendMessage);
             this.Controls.Add(this.Baudrate);
             this.Controls.Add(this.bt_serialConnect);
@@ -218,7 +235,7 @@
         private System.Windows.Forms.Button bt_serialConnect;
         private System.Windows.Forms.TextBox Baudrate;
         private System.Windows.Forms.TextBox sendMessage;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox Carrier;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox6;
@@ -226,13 +243,14 @@
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.RichTextBox console;
+        private System.Windows.Forms.RichTextBox ComStatus;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ListBox comList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lb_Baudrate;
         private System.Windows.Forms.Button bt_send;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.RichTextBox Console;
     }
 }
 
