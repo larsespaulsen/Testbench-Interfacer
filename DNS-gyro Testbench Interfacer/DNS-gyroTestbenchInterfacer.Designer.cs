@@ -137,6 +137,11 @@
             this.console.TabIndex = 11;
             this.console.Text = "";
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.serial_Read_Worker);
+            // 
             // comList
             // 
             this.comList.FormattingEnabled = true;

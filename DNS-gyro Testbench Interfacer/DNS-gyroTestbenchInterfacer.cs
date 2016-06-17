@@ -86,24 +86,29 @@ namespace DNS_gyro_Testbench_Interfacer
         {
 
                 StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
-                Thread readThread = new Thread(serial_Read);
-
-            
+         
             if (!_continue)
             {
                 _serialPort.Open();
                 _continue = true;
-                readThread.Start();
+
+                backgroundWorker1.RunWorkerAsync();
+
                 bt_serialConnect.Text = "Disconnect";
                 statusStrip1.Text = "Connected";
             }
             else
             {
+
+
+
                 _continue = false;
-                readThread.Join();
-                _serialPort.Close();
+
                 bt_serialConnect.Text = "Connect";
                 statusStrip1.Text = "Disconnected";
+
+
+                //backgroundWorker1.CancelAsync();
             }
         }
 
@@ -125,7 +130,19 @@ namespace DNS_gyro_Testbench_Interfacer
             _serialPort.WriteLine(sendMessage.Text);
         }
 
-
+        private void serial_Read_Worker(object sender, DoWorkEventArgs e)
+        {
+            while (_continue)
+            {
+                try
+                {
+                    string message = _serialPort.ReadLine();
+                    lock (serialLock) { serialData = message.ToString(); }
+                }
+                catch (TimeoutException) { }
+            }
+            _serialPort.Close();
+        }
     }
 }
 
