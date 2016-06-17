@@ -16,11 +16,13 @@ namespace DNS_gyro_Testbench_Interfacer
 {
     public partial class Form1 : Form
     {
+        
         static SerialPort _serialPort;
         static bool _continue;
 
         private Object serialLock = new Object();
         string serialData = " ";
+        private bool booted = false;
 
         public Form1()
         {
@@ -29,6 +31,8 @@ namespace DNS_gyro_Testbench_Interfacer
             timer.Tick += new EventHandler(UpdateConsole);
             timer.Interval = 100; //100 ms
             timer.Start();
+
+
 
             InitializeComponent();
             _serialPort = new SerialPort();
@@ -40,7 +44,10 @@ namespace DNS_gyro_Testbench_Interfacer
             _serialPort.WriteTimeout = 500;
             _serialPort.BaudRate = 230400;
             _serialPort.PortName = "COM4";
+            _serialPort.Close();
             console.Text = "This is a TextBox control.";
+
+            statusStrip1.Text = "Disconnected";
             foreach (string s in SerialPort.GetPortNames())
             {
                 comList.Items.Add(s);
@@ -72,20 +79,23 @@ namespace DNS_gyro_Testbench_Interfacer
             {
                 lock (serialLock) { console.Text = serialData; }
             }
+
         }
 
         private void bt_serialConnect_Click(object sender, EventArgs e)
         {
-            string name;
-            string message;
-            StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
-            Thread readThread = new Thread(serial_Read);
+
+                StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
+                Thread readThread = new Thread(serial_Read);
+
+            
             if (!_continue)
             {
                 _serialPort.Open();
                 _continue = true;
                 readThread.Start();
                 bt_serialConnect.Text = "Disconnect";
+                statusStrip1.Text = "Connected";
             }
             else
             {
@@ -93,6 +103,7 @@ namespace DNS_gyro_Testbench_Interfacer
                 readThread.Join();
                 _serialPort.Close();
                 bt_serialConnect.Text = "Connect";
+                statusStrip1.Text = "Disconnected";
             }
         }
 
@@ -108,6 +119,13 @@ namespace DNS_gyro_Testbench_Interfacer
                 catch (TimeoutException) { }
             }
         }
+
+        private void bt_send_Click(object sender, EventArgs e)
+        {
+            _serialPort.WriteLine(sendMessage.Text);
+        }
+
+
     }
 }
 

@@ -30,7 +30,7 @@
         {
             this.bt_serialConnect = new System.Windows.Forms.Button();
             this.Baudrate = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.sendMessage = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
@@ -44,6 +44,8 @@
             this.comList = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lb_Baudrate = new System.Windows.Forms.Label();
+            this.bt_send = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.SuspendLayout();
             // 
             // bt_serialConnect
@@ -64,12 +66,12 @@
             this.Baudrate.TabIndex = 1;
             this.Baudrate.TextChanged += new System.EventHandler(this.Baudrate_TextChanged);
             // 
-            // textBox2
+            // sendMessage
             // 
-            this.textBox2.Location = new System.Drawing.Point(257, 106);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 2;
+            this.sendMessage.Location = new System.Drawing.Point(388, 354);
+            this.sendMessage.Name = "sendMessage";
+            this.sendMessage.Size = new System.Drawing.Size(401, 20);
+            this.sendMessage.TabIndex = 2;
             // 
             // textBox3
             // 
@@ -160,11 +162,30 @@
             this.lb_Baudrate.TabIndex = 13;
             this.lb_Baudrate.Text = "Baudrate";
             // 
+            // bt_send
+            // 
+            this.bt_send.Location = new System.Drawing.Point(812, 354);
+            this.bt_send.Name = "bt_send";
+            this.bt_send.Size = new System.Drawing.Size(75, 23);
+            this.bt_send.TabIndex = 14;
+            this.bt_send.Text = "Send";
+            this.bt_send.UseVisualStyleBackColor = true;
+            this.bt_send.Click += new System.EventHandler(this.bt_send_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 468);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(938, 22);
+            this.statusStrip1.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 490);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.bt_send);
             this.Controls.Add(this.lb_Baudrate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comList);
@@ -177,7 +198,7 @@
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.sendMessage);
             this.Controls.Add(this.Baudrate);
             this.Controls.Add(this.bt_serialConnect);
             this.Name = "Form1";
@@ -191,7 +212,7 @@
 
         private System.Windows.Forms.Button bt_serialConnect;
         private System.Windows.Forms.TextBox Baudrate;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox sendMessage;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
@@ -205,6 +226,8 @@
         private System.Windows.Forms.ListBox comList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lb_Baudrate;
+        private System.Windows.Forms.Button bt_send;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 
