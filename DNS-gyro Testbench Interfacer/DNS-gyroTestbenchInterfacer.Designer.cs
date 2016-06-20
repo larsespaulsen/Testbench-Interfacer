@@ -1,6 +1,6 @@
 ﻿namespace DNS_gyro_Testbench_Interfacer
 {
-    partial class Form1
+    partial class Interfacer
     {
         /// <summary>
         /// Required designer variable.
@@ -76,9 +76,9 @@
             // 
             // Carrier
             // 
-            this.Carrier.Location = new System.Drawing.Point(388, 415);
+            this.Carrier.Location = new System.Drawing.Point(74, 415);
             this.Carrier.Name = "Carrier";
-            this.Carrier.Size = new System.Drawing.Size(499, 20);
+            this.Carrier.Size = new System.Drawing.Size(1377, 20);
             this.Carrier.TabIndex = 3;
             // 
             // textBox4
@@ -182,9 +182,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 713);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 753);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1310, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1463, 22);
             this.statusStrip1.TabIndex = 0;
             // 
             // Console
@@ -193,7 +193,7 @@
             this.Console.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Console.ForeColor = System.Drawing.SystemColors.WindowText;
             this.Console.Location = new System.Drawing.Point(388, 26);
-            this.Console.MaxLength = 10;
+            this.Console.MaxLength = 2000000;
             this.Console.Name = "Console";
             this.Console.ReadOnly = true;
             this.Console.Size = new System.Drawing.Size(499, 308);
@@ -204,7 +204,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1310, 735);
+            this.ClientSize = new System.Drawing.Size(1463, 775);
             this.Controls.Add(this.Console);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.bt_send);
