@@ -70,9 +70,16 @@ namespace DNS_gyro_Testbench_Interfacer
                     {
                         serialData = message.ToString();
                     }
-
+                    try
+                    {
+                        parse(this, e);
+                    }
+                    catch
+                    {
+                        //TODO
+                    }
                 }
-                catch (TimeoutException) { }
+                catch { }//TODO//(TimeoutException) { }
             }
             _serialPort.Close();
         }

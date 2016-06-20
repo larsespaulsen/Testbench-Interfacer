@@ -32,7 +32,7 @@
             this.Baudrate = new System.Windows.Forms.TextBox();
             this.sendMessage = new System.Windows.Forms.TextBox();
             this.Carrier = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.LogKeyWord = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
@@ -47,6 +47,8 @@
             this.bt_send = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.Console = new System.Windows.Forms.RichTextBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // bt_serialConnect
@@ -69,7 +71,7 @@
             // 
             // sendMessage
             // 
-            this.sendMessage.Location = new System.Drawing.Point(388, 354);
+            this.sendMessage.Location = new System.Drawing.Point(818, 719);
             this.sendMessage.Name = "sendMessage";
             this.sendMessage.Size = new System.Drawing.Size(401, 20);
             this.sendMessage.TabIndex = 2;
@@ -78,15 +80,15 @@
             // 
             this.Carrier.Location = new System.Drawing.Point(74, 415);
             this.Carrier.Name = "Carrier";
-            this.Carrier.Size = new System.Drawing.Size(1377, 20);
+            this.Carrier.Size = new System.Drawing.Size(304, 20);
             this.Carrier.TabIndex = 3;
             // 
-            // textBox4
+            // LogKeyWord
             // 
-            this.textBox4.Location = new System.Drawing.Point(257, 158);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 4;
+            this.LogKeyWord.Location = new System.Drawing.Point(74, 389);
+            this.LogKeyWord.Name = "LogKeyWord";
+            this.LogKeyWord.Size = new System.Drawing.Size(100, 20);
+            this.LogKeyWord.TabIndex = 4;
             // 
             // textBox5
             // 
@@ -172,9 +174,9 @@
             // 
             // bt_send
             // 
-            this.bt_send.Location = new System.Drawing.Point(812, 354);
+            this.bt_send.Location = new System.Drawing.Point(1242, 719);
             this.bt_send.Name = "bt_send";
-            this.bt_send.Size = new System.Drawing.Size(75, 23);
+            this.bt_send.Size = new System.Drawing.Size(75, 20);
             this.bt_send.TabIndex = 14;
             this.bt_send.Text = "Send";
             this.bt_send.UseVisualStyleBackColor = true;
@@ -182,9 +184,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 753);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 913);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1463, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1336, 22);
             this.statusStrip1.TabIndex = 0;
             // 
             // Console
@@ -192,19 +194,30 @@
             this.Console.BackColor = System.Drawing.Color.FloralWhite;
             this.Console.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Console.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.Console.Location = new System.Drawing.Point(388, 26);
+            this.Console.Location = new System.Drawing.Point(818, 12);
             this.Console.MaxLength = 2000000;
             this.Console.Name = "Console";
             this.Console.ReadOnly = true;
-            this.Console.Size = new System.Drawing.Size(499, 308);
+            this.Console.Size = new System.Drawing.Size(499, 692);
             this.Console.TabIndex = 15;
             this.Console.Text = "";
             // 
-            // Form1
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(566, 184);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(117, 106);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Interfacer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1463, 775);
+            this.ClientSize = new System.Drawing.Size(1336, 935);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.Console);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.bt_send);
@@ -218,12 +231,12 @@
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.LogKeyWord);
             this.Controls.Add(this.Carrier);
             this.Controls.Add(this.sendMessage);
             this.Controls.Add(this.Baudrate);
             this.Controls.Add(this.bt_serialConnect);
-            this.Name = "Form1";
+            this.Name = "Interfacer";
             this.Text = "DNS-gyro Testbench Interfacer";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -236,7 +249,7 @@
         private System.Windows.Forms.TextBox Baudrate;
         private System.Windows.Forms.TextBox sendMessage;
         private System.Windows.Forms.TextBox Carrier;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox LogKeyWord;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.TextBox textBox7;
@@ -251,6 +264,8 @@
         private System.Windows.Forms.Button bt_send;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.RichTextBox Console;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

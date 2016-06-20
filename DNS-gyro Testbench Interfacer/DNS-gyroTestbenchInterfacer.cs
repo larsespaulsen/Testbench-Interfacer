@@ -27,11 +27,11 @@ namespace DNS_gyro_Testbench_Interfacer
             SerialInitialize();
             update_ComStatus(this, new EventArgs());
             statusStrip1.Text = "Disconnected";
-
-            var timer = new System.Windows.Forms.Timer();
-            timer.Tick += new EventHandler(parse);
-            timer.Interval = 100; //100 ms
-            timer.Start();
+            fileInitialize();
+            //var timer = new System.Windows.Forms.Timer();
+            //timer.Tick += new EventHandler(parse);
+            //timer.Interval = 100; //100 ms
+            //timer.Start();
         }
 
         private void Baudrate_TextChanged(object sender, EventArgs e)
@@ -63,11 +63,33 @@ namespace DNS_gyro_Testbench_Interfacer
 
         private void bt_send_Click(object sender, EventArgs e)
         {
+            Console.Clear();
             _serialPort.WriteLine(sendMessage.Text);
         }
 
         delegate void SetTextCallback(string text);
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int size = -1;
+            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                //file = openFileDialog1;
+                string filename = openFileDialog1.FileName;
+                try
+                {
+                    string text = System.IO.File.ReadAllText(filename);
+                    size = text.Length;
+                }
+                catch //(IOException)
+                {
+                    //TODO
+                }
+            }
+            set_Console_Text(size.ToString()); // <-- Shows file size in debugging mode.
+            set_Console_Text(result.ToString()); // <-- For debugging use.
+        }
 
     }
 }
