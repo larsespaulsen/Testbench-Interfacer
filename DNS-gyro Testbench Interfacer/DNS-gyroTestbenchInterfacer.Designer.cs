@@ -33,7 +33,7 @@
             this.sendMessage = new System.Windows.Forms.TextBox();
             this.Carrier = new System.Windows.Forms.TextBox();
             this.LogKeyWord = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.Carrier_Name = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
@@ -49,6 +49,10 @@
             this.Console = new System.Windows.Forms.RichTextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button1 = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.bt_Reload_Carrier_List = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lb_Carrier_Name = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // bt_serialConnect
@@ -71,7 +75,7 @@
             // 
             // sendMessage
             // 
-            this.sendMessage.Location = new System.Drawing.Point(818, 719);
+            this.sendMessage.Location = new System.Drawing.Point(1000, 719);
             this.sendMessage.Name = "sendMessage";
             this.sendMessage.Size = new System.Drawing.Size(401, 20);
             this.sendMessage.TabIndex = 2;
@@ -90,44 +94,44 @@
             this.LogKeyWord.Size = new System.Drawing.Size(100, 20);
             this.LogKeyWord.TabIndex = 4;
             // 
-            // textBox5
+            // Carrier_Name
             // 
-            this.textBox5.Location = new System.Drawing.Point(257, 184);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 5;
+            this.Carrier_Name.Location = new System.Drawing.Point(882, 23);
+            this.Carrier_Name.Name = "Carrier_Name";
+            this.Carrier_Name.Size = new System.Drawing.Size(100, 20);
+            this.Carrier_Name.TabIndex = 5;
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(257, 210);
+            this.textBox6.Location = new System.Drawing.Point(882, 49);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(100, 20);
             this.textBox6.TabIndex = 6;
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(257, 236);
+            this.textBox7.Location = new System.Drawing.Point(882, 75);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(100, 20);
             this.textBox7.TabIndex = 7;
             // 
             // textBox8
             // 
-            this.textBox8.Location = new System.Drawing.Point(257, 262);
+            this.textBox8.Location = new System.Drawing.Point(882, 101);
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(100, 20);
             this.textBox8.TabIndex = 8;
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(257, 288);
+            this.textBox9.Location = new System.Drawing.Point(882, 127);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(100, 20);
             this.textBox9.TabIndex = 9;
             // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(257, 314);
+            this.textBox10.Location = new System.Drawing.Point(882, 153);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(100, 20);
             this.textBox10.TabIndex = 10;
@@ -174,7 +178,7 @@
             // 
             // bt_send
             // 
-            this.bt_send.Location = new System.Drawing.Point(1242, 719);
+            this.bt_send.Location = new System.Drawing.Point(1424, 719);
             this.bt_send.Name = "bt_send";
             this.bt_send.Size = new System.Drawing.Size(75, 20);
             this.bt_send.TabIndex = 14;
@@ -184,9 +188,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 913);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 901);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1336, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1511, 22);
             this.statusStrip1.TabIndex = 0;
             // 
             // Console
@@ -194,7 +198,7 @@
             this.Console.BackColor = System.Drawing.Color.FloralWhite;
             this.Console.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Console.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.Console.Location = new System.Drawing.Point(818, 12);
+            this.Console.Location = new System.Drawing.Point(1000, 12);
             this.Console.MaxLength = 2000000;
             this.Console.Name = "Console";
             this.Console.ReadOnly = true;
@@ -204,7 +208,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(566, 184);
+            this.button1.Location = new System.Drawing.Point(240, 26);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(117, 106);
             this.button1.TabIndex = 16;
@@ -212,11 +216,51 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(384, 26);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(362, 69);
+            this.listBox1.TabIndex = 17;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // bt_Reload_Carrier_List
+            // 
+            this.bt_Reload_Carrier_List.Location = new System.Drawing.Point(384, 98);
+            this.bt_Reload_Carrier_List.Name = "bt_Reload_Carrier_List";
+            this.bt_Reload_Carrier_List.Size = new System.Drawing.Size(362, 23);
+            this.bt_Reload_Carrier_List.TabIndex = 18;
+            this.bt_Reload_Carrier_List.Text = "Reload Carrier List";
+            this.bt_Reload_Carrier_List.UseVisualStyleBackColor = true;
+            this.bt_Reload_Carrier_List.Click += new System.EventHandler(this.bt_Reload_Carrier_List_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(384, 141);
+            this.progressBar1.Maximum = 16;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(362, 23);
+            this.progressBar1.TabIndex = 19;
+            // 
+            // lb_Carrier_Name
+            // 
+            this.lb_Carrier_Name.AutoSize = true;
+            this.lb_Carrier_Name.Location = new System.Drawing.Point(799, 26);
+            this.lb_Carrier_Name.Name = "lb_Carrier_Name";
+            this.lb_Carrier_Name.Size = new System.Drawing.Size(68, 13);
+            this.lb_Carrier_Name.TabIndex = 20;
+            this.lb_Carrier_Name.Text = "Carrier Name";
+            // 
             // Interfacer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1336, 935);
+            this.ClientSize = new System.Drawing.Size(1511, 923);
+            this.Controls.Add(this.lb_Carrier_Name);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.bt_Reload_Carrier_List);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Console);
             this.Controls.Add(this.statusStrip1);
@@ -230,7 +274,7 @@
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.textBox7);
             this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.Carrier_Name);
             this.Controls.Add(this.LogKeyWord);
             this.Controls.Add(this.Carrier);
             this.Controls.Add(this.sendMessage);
@@ -250,7 +294,7 @@
         private System.Windows.Forms.TextBox sendMessage;
         private System.Windows.Forms.TextBox Carrier;
         private System.Windows.Forms.TextBox LogKeyWord;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox Carrier_Name;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.TextBox textBox8;
@@ -266,6 +310,10 @@
         private System.Windows.Forms.RichTextBox Console;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button bt_Reload_Carrier_List;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label lb_Carrier_Name;
     }
 }
 

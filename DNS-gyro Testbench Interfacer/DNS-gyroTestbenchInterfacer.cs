@@ -28,6 +28,7 @@ namespace DNS_gyro_Testbench_Interfacer
             update_ComStatus(this, new EventArgs());
             statusStrip1.Text = "Disconnected";
             fileInitialize();
+            
             //var timer = new System.Windows.Forms.Timer();
             //timer.Tick += new EventHandler(parse);
             //timer.Interval = 100; //100 ms
@@ -64,11 +65,13 @@ namespace DNS_gyro_Testbench_Interfacer
         private void bt_send_Click(object sender, EventArgs e)
         {
             Console.Clear();
-            _serialPort.WriteLine(sendMessage.Text);
+            serial_Write(sendMessage.Text);
         }
 
         delegate void SetTextCallback(string text);
 
+
+        //open file dialog
         private void button1_Click(object sender, EventArgs e)
         {
             int size = -1;
@@ -91,6 +94,41 @@ namespace DNS_gyro_Testbench_Interfacer
             set_Console_Text(result.ToString()); // <-- For debugging use.
         }
 
+        private void bt_Reload_Carrier_List_Click(object sender, EventArgs e)
+        {
+            detect_Carriers();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = listBox1.GetItemText(listBox1.SelectedItem);
+            for (int i = 0; i < InitializedCarriers; i++)
+            {
+                try
+                {
+                    if (Carriers[i].Carrier_serial_number.Substring(0, 4) == selected.Substring(0, 4))
+                    {
+                        Carrier_Name.Text = Carriers[i].Carrier_serial_number;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is ArgumentOutOfRangeException)
+                    {
+                        MessageBox.Show("Argument is out of range");
+                    }
+                    else if (ex is FormatException)
+                    {
+                        MessageBox.Show("Format Exception");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            
+        }
     }
 }
 

@@ -45,11 +45,13 @@ namespace DNS_gyro_Testbench_Interfacer
             StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
             if (!_continue)
             {
+                Console.Clear();
                 _serialPort.Open();
                 _continue = true;
                 backgroundWorker1.RunWorkerAsync();
                 bt_serialConnect.Text = "Disconnect";
                 statusStrip1.Text = "Connected";
+                detect_Carriers();
             }
             else
             {
@@ -83,5 +85,26 @@ namespace DNS_gyro_Testbench_Interfacer
             }
             _serialPort.Close();
         }
+
+
+        private void serial_Write(string text)
+        {
+            try
+            {
+                _serialPort.WriteLine(text);
+            }
+            catch (Exception ex)
+            {
+                if (ex is InvalidOperationException)
+                {
+                    MessageBox.Show("No active connection");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+            
     }
 }
