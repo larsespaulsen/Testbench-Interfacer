@@ -90,13 +90,26 @@ namespace DNS_gyro_Testbench_Interfacer
                     //TODO
                 }
             }
-            set_Console_Text(size.ToString()); // <-- Shows file size in debugging mode.
-            set_Console_Text(result.ToString()); // <-- For debugging use.
         }
 
         private void bt_Reload_Carrier_List_Click(object sender, EventArgs e)
         {
-            detect_Carriers();
+            try
+            {
+                SendWorker.RunWorkerAsync();
+            }
+            catch (Exception ex)
+            { 
+                if (ex is InvalidOperationException)
+                {
+                    MessageBox.Show("BUSY!");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,7 +121,9 @@ namespace DNS_gyro_Testbench_Interfacer
                 {
                     if (Carriers[i].Carrier_serial_number.Substring(0, 4) == selected.Substring(0, 4))
                     {
-                        Carrier_Name.Text = Carriers[i].Carrier_serial_number;
+                        Carrier_serial_number.Text = Carriers[i].Carrier_serial_number;
+
+                        CurrentCarrier = i;
                     }
                 }
                 catch (Exception ex)
@@ -128,6 +143,38 @@ namespace DNS_gyro_Testbench_Interfacer
                 }
             }
             
+        }
+
+        private void bt_Set_Carrier_Click(object sender, EventArgs e)
+        {
+            Console.Clear();
+            string carrierSettings = "DW" + Carriers[CurrentCarrier].Carrier_I2C_address.Substring(2, 3) + ",ADXRS290,None," + Carriers[CurrentCarrier].Carrier_serial_number;
+            serial_Write(carrierSettings);
+            textBox7.Text = carrierSettings;
+        }
+
+        private void Carrier_Name_TextChanged(object sender, EventArgs e)
+        {
+            Carriers[CurrentCarrier].Carrier_serial_number = Carrier_serial_number.Text;
+        }
+
+        private void Find_Carriers(object sender, DoWorkEventArgs e)
+        {
+            Invoke(new Action(() => progressBar1.Maximum = 16));
+            Invoke(new Action(() => progressBar1.Value = 0));
+            Invoke(new Action(() => Console.Clear()));
+            int Addr;
+            for (int i = 0; i < 16; i++)
+            {
+                Addr = 20 + i;
+                serial_Write("DR" + Addr.ToString());
+                Invoke(new Action(() => progressBar1.Increment(1)));
+            }
+        }
+
+        private void bt_Reload_Carrier_List_Click_1(object sender, EventArgs e)
+        {
+            SendWorker.RunWorkerAsync();
         }
     }
 }

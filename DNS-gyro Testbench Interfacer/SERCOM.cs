@@ -10,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Timers;
+using System.Text.RegularExpressions;
 
 namespace DNS_gyro_Testbench_Interfacer
 {
@@ -19,8 +20,10 @@ namespace DNS_gyro_Testbench_Interfacer
         static bool _continue;
 
         private Object serialLock = new Object();
+        private static Mutex serialMutex = new Mutex();
         string serialData = " ";
-
+        bool CanSend = true;
+        
         public void SerialInitialize()
         {
             _serialPort = new SerialPort();
@@ -48,10 +51,24 @@ namespace DNS_gyro_Testbench_Interfacer
                 Console.Clear();
                 _serialPort.Open();
                 _continue = true;
-                backgroundWorker1.RunWorkerAsync();
+                ReceiveWorker.RunWorkerAsync();
                 bt_serialConnect.Text = "Disconnect";
                 statusStrip1.Text = "Connected";
-                detect_Carriers();
+                try
+                {
+                    SendWorker.RunWorkerAsync();
+                }
+                catch (Exception ex)
+                {
+                    if (ex is InvalidOperationException)
+                    {
+                        MessageBox.Show("BUSY!");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
             else
             {
@@ -68,10 +85,7 @@ namespace DNS_gyro_Testbench_Interfacer
                 try
                 {
                     string message = _serialPort.ReadLine();
-                    lock (serialLock)
-                    {
-                        serialData = message.ToString();
-                    }
+                    serialData = message.ToString();
                     try
                     {
                         parse(this, e);
@@ -80,8 +94,25 @@ namespace DNS_gyro_Testbench_Interfacer
                     {
                         //TODO
                     }
+
                 }
-                catch { }//TODO//(TimeoutException) { }
+                catch (Exception ex)
+                {
+                    if (ex is ArgumentOutOfRangeException)
+                    {
+                        MessageBox.Show("ArgumentOutOfRangeException");
+                    }
+                    if (ex is TimeoutException)
+                    {
+                        CanSend = true;
+                        //MessageBox.Show("TimeoutException!");
+                    }
+                    
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
             _serialPort.Close();
         }
@@ -89,22 +120,42 @@ namespace DNS_gyro_Testbench_Interfacer
 
         private void serial_Write(string text)
         {
-            try
-            {
-                _serialPort.WriteLine(text);
-            }
-            catch (Exception ex)
-            {
-                if (ex is InvalidOperationException)
-                {
-                    MessageBox.Show("No active connection");
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
             
+            string txt = RemoveLineEndings(text);
+                try
+                    {
+                        //set_Console_Text(txt + Environment.NewLine);
+                        _serialPort.WriteLine(txt);
+                        Thread.Sleep(100);
+            }
+                catch (Exception ex)
+                    {
+                        if (ex is InvalidOperationException)
+                        {
+                            MessageBox.Show("No active connection");
+                        }
+                        if (ex is ArgumentOutOfRangeException)
+                        {
+                            MessageBox.Show("ArgumentOutOfRangeException");
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+            
+        }
+
+        static string RemoveLineEndings(string text)
+        {
+            StringBuilder newText = new StringBuilder();
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (!char.IsControl(text, i))
+                    newText.Append(text[i]);
+            }
+            return newText.ToString();
+        }
+
     }
 }
