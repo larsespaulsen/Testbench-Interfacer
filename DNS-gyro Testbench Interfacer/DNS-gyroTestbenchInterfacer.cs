@@ -122,6 +122,54 @@ namespace DNS_gyro_Testbench_Interfacer
                     if (Carriers[i].Carrier_serial_number.Substring(0, 4) == selected.Substring(0, 4))
                     {
                         Carrier_serial_number.Text = Carriers[i].Carrier_serial_number;
+                        Sensor_1_name.Text = Carriers[i].Sensor_1_name;
+                        Sensor_2_name.Text = Carriers[i].Sensor_2_name;
+                        Sensor_1_active_sensors.Text = Carriers[i].Sensor_1_active_sensors.ToString();
+                        Sensor_1_installed_bitmap.Text = Carriers[i].Sensor_1_installed_bitmap.ToString();
+                        Sensor_1_enabled_bitmap.Text = Carriers[i].Sensor_1_enabled_bitmap.ToString();
+                        Sensor_1_faulty_bitmap.Text = Carriers[i].Sensor_1_faulty_bitmap.ToString();
+                        Sensor_2_active_sensors.Text = Carriers[i].Sensor_2_active_sensors.ToString();
+                        Sensor_2_installed_bitmap.Text = Carriers[i].Sensor_2_installed_bitmap.ToString();
+                        Sensor_2_enabled_bitmap.Text = Carriers[i].Sensor_2_enabled_bitmap.ToString();
+                        Sensor_2_failty_bitmap.Text = Carriers[i].Sensor_2_failty_bitmap.ToString();
+                        Encoder_offset.Text = Carriers[i].Encoder_offset.ToString();
+                        Sensor_1_Raw_data_format.Text = Carriers[i].Sensor_1_Raw_data_format.ToString();
+                        Sensor_2_Raw_data_format.Text = Carriers[i].Sensor_2_Raw_data_format.ToString();
+                        Sensor_1_Sample_rate.Text = Carriers[i].Sensor_1_Sample_rate.ToString();
+                        Sensor_1_Scale_factor_X.Text = Carriers[i].Sensor_1_Scale_factor_X.ToString();
+                        Sensor_1_Scale_factor_Y.Text = Carriers[i].Sensor_1_Scale_factor_Y.ToString();
+                        Sensor_1_Scale_factor_Z.Text = Carriers[i].Sensor_1_Scale_factor_Z.ToString();
+                        Sensor_1_SF_Tempco_X.Text = Carriers[i].Sensor_1_SF_Tempco_X.ToString();
+                        Sensor_1_SF_Tempco_Y.Text = Carriers[i].Sensor_1_SF_Tempco_Y.ToString();
+                        Sensor_1_SF_Tempco_Z.Text = Carriers[i].Sensor_1_SF_Tempco_Z.ToString();
+                        Sensor_1_Offset_X.Text = Carriers[i].Sensor_1_Offset_X.ToString();
+                        Sensor_1_Offset_Y.Text = Carriers[i].Sensor_1_Offset_Y.ToString();
+                        Sensor_1_Offset_Z.Text = Carriers[i].Sensor_1_Offset_Z.ToString();
+                        Sensor_1_Offset_Tempco_X.Text = Carriers[i].Sensor_1_Offset_Tempco_X.ToString();
+                        Sensor_1_Offset_Tempco_Y.Text = Carriers[i].Sensor_1_Offset_Tempco_Y.ToString();
+                        Sensor_1_Offset_Tempco_Z.Text = Carriers[i].Sensor_1_Offset_Tempco_Z.ToString();
+                        Sensor_1_Misalign_Alpha.Text = Carriers[i].Sensor_1_Misalign_Alpha.ToString();
+                        Sensor_1_Misalign_Beta.Text = Carriers[i].Sensor_1_Misalign_Beta.ToString();
+                        Sensor_1_Misalign_Gamma.Text = Carriers[i].Sensor_1_Misalign_Gamma.ToString();
+                        Sensor_2_Sample_rate.Text = Carriers[i].Sensor_2_Sample_rate.ToString();
+                        Sensor_2_Scale_factor_X.Text = Carriers[i].Sensor_2_Scale_factor_X.ToString();
+                        Sensor_2_Scale_factor_Y.Text = Carriers[i].Sensor_2_Scale_factor_Y.ToString();
+                        Sensor_2_Scale_factor_Z.Text = Carriers[i].Sensor_2_Scale_factor_Z.ToString();
+                        Sensor_2_SF_Tempco_X.Text = Carriers[i].Sensor_2_SF_Tempco_X.ToString();
+                        Sensor_2_SF_Tempco_Y.Text = Carriers[i].Sensor_2_SF_Tempco_Y.ToString();
+                        Sensor_2_SF_Tempco_Z.Text = Carriers[i].Sensor_2_SF_Tempco_Z.ToString();
+                        Sensor_2_Offset_X.Text = Carriers[i].Sensor_2_Offset_X.ToString();
+                        Sensor_2_Offset_Y.Text = Carriers[i].Sensor_2_Offset_Y.ToString();
+                        Sensor_2_Offset_Z.Text = Carriers[i].Sensor_2_Offset_Z.ToString();
+                        Sensor_2_Offset_Tempco_X.Text = Carriers[i].Sensor_2_Offset_Tempco_X.ToString();
+                        Sensor_2_Offset_Tempco_Y.Text = Carriers[i].Sensor_2_Offset_Tempco_Y.ToString();
+                        Sensor_2_Offset_Tempco_Z.Text = Carriers[i].Sensor_2_Offset_Tempco_Z.ToString();
+                        Sensor_2_Misalign_Alpha.Text = Carriers[i].Sensor_2_Misalign_Alpha.ToString();
+                        Sensor_2_Misalign_Beta.Text = Carriers[i].Sensor_2_Misalign_Beta.ToString();
+                        Sensor_2_Misalign_Gamma.Text = Carriers[i].Sensor_2_Misalign_Gamma.ToString();
+                        Temperature_offset.Text = Carriers[i].Temperature_offset.ToString();
+                        Temperature_scale_factor.Text = Carriers[i].Temperature_scale_factor.ToString();
+
 
                         CurrentCarrier = i;
                     }
@@ -147,10 +195,11 @@ namespace DNS_gyro_Testbench_Interfacer
 
         private void bt_Set_Carrier_Click(object sender, EventArgs e)
         {
-            Console.Clear();
+            Invoke(new Action(() => Console.Clear()));
             string carrierSettings = "DW" + Carriers[CurrentCarrier].Carrier_I2C_address.Substring(2, 3) + ",ADXRS290,None," + Carriers[CurrentCarrier].Carrier_serial_number;
             serial_Write(carrierSettings);
-            textBox7.Text = carrierSettings;
+            Invoke(new Action(() => Console.Text = carrierSettings));
+
         }
 
         private void Carrier_Name_TextChanged(object sender, EventArgs e)
@@ -160,21 +209,44 @@ namespace DNS_gyro_Testbench_Interfacer
 
         private void Find_Carriers(object sender, DoWorkEventArgs e)
         {
-            Invoke(new Action(() => progressBar1.Maximum = 16));
-            Invoke(new Action(() => progressBar1.Value = 0));
-            Invoke(new Action(() => Console.Clear()));
-            int Addr;
-            for (int i = 0; i < 16; i++)
-            {
-                Addr = 20 + i;
-                serial_Write("DR" + Addr.ToString());
-                Invoke(new Action(() => progressBar1.Increment(1)));
+            if (_continue) {
+                Invoke(new Action(() => bt_Reload_Carrier_List.Enabled = false));
+                Invoke(new Action(() => progressBar1.Maximum = 16));
+                Invoke(new Action(() => progressBar1.Value = 0));
+                Invoke(new Action(() => Console.Clear()));
+                int Addr;
+                for (int i = 0; i < 16; i++)
+                {
+                    Addr = 20 + i;
+                    serial_Write("DR" + Addr.ToString());
+                    Invoke(new Action(() => progressBar1.Increment(1)));
+                }
             }
+            else
+            {
+                MessageBox.Show("No active connection");
+            }
+            Invoke(new Action(() => bt_Reload_Carrier_List.Enabled = true));
         }
 
         private void bt_Reload_Carrier_List_Click_1(object sender, EventArgs e)
         {
-            SendWorker.RunWorkerAsync();
+            try
+            {
+                SendWorker.RunWorkerAsync();
+            }
+                catch (Exception ex)
+                {
+                    if (ex is InvalidOperationException)
+                    {
+                        MessageBox.Show("BUSY!");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
         }
 
     }

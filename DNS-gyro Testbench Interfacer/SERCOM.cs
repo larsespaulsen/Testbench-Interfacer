@@ -45,6 +45,7 @@ namespace DNS_gyro_Testbench_Interfacer
 
         private void bt_serialConnect_Click(object sender, EventArgs e)
         {
+            Invoke(new Action(() => bt_serialConnect.Enabled = false));
             StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
             if (!_continue)
             {
@@ -77,6 +78,7 @@ namespace DNS_gyro_Testbench_Interfacer
                 statusStrip1.Text = "Disconnected";
                 //backgroundWorker1.CancelAsync();
             }
+            Invoke(new Action(() => bt_serialConnect.Enabled = true));
         }
         private void serial_Read_Worker(object sender, DoWorkEventArgs e)
         {
@@ -126,6 +128,7 @@ namespace DNS_gyro_Testbench_Interfacer
                     {
                         //set_Console_Text(txt + Environment.NewLine);
                         _serialPort.WriteLine(txt);
+                        //Give MCU time to respond
                         Thread.Sleep(100);
             }
                 catch (Exception ex)
@@ -138,10 +141,10 @@ namespace DNS_gyro_Testbench_Interfacer
                         {
                             MessageBox.Show("ArgumentOutOfRangeException");
                         }
-                        else
-                        {
-                            throw;
-                        }
+                        //else
+                        //{
+                        //    throw;
+                        //}
                     }
             
         }

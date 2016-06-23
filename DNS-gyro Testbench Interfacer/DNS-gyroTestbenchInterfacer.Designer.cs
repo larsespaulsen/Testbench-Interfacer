@@ -264,6 +264,7 @@
             this.bt_Set_Carrier.Size = new System.Drawing.Size(400, 23);
             this.bt_Set_Carrier.TabIndex = 1;
             this.bt_Set_Carrier.Text = "Set Carrier";
+            this.bt_Set_Carrier.Click += new System.EventHandler(this.bt_Set_Carrier_Click);
             // 
             // SendWorker
             // 

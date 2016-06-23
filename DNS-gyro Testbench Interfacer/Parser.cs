@@ -11,6 +11,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Timers;
+using System.Globalization;
 
 //99 little bugs in the code
 //99 bugs in the code
@@ -64,8 +65,7 @@ namespace DNS_gyro_Testbench_Interfacer
                     Carriers[InitializedCarriers].Carrier_serial_number = serialData.Substring(27);
                     Add_Carrier_List_Item(Carriers[InitializedCarriers].Carrier_serial_number + "@" + Carriers[InitializedCarriers].Carrier_I2C_address);
 
-                    //Increment when done Initializing Carrier
-                    InitializedCarriers++;
+                    
                     break;
 
                 case "Sensor 1 name           ":
@@ -118,142 +118,145 @@ namespace DNS_gyro_Testbench_Interfacer
 
                 case "Sensor 2 Raw data format":
                     Carriers[InitializedCarriers].Sensor_2_Raw_data_format = Int32.Parse(serialData.Substring(27));
+                    
                     break;
 
                 case "Sensor 1 Sample rate    ":
-                    Carriers[InitializedCarriers].Sensor_1_Sample_rate = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Sample_rate = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Scale factor X ":
-                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_X = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_X = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Scale factor Y ":
-                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_Y = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_Y = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Scale factor Z ":
-                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_Z = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_Z = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 SF Tempco X    ":
-                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_X = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_X = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 SF Tempco Y    ":
-                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Y = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Y = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 SF Tempco Z    ":
-                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Z = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Z = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Offset X       ":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_X = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Offset_X = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Offset Y       ":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Y = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Y = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Offset Z       ":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Z = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Z = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Offset Tempco X":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_X = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_X = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Offset Tempco Y":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Y = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Y = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Offset Tempco Z":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Z = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Z = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Misalign Alpha ":
-                    Carriers[InitializedCarriers].Sensor_1_Misalign_Alpha = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Misalign_Alpha = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Misalign Beta  ":
-                    Carriers[InitializedCarriers].Sensor_1_Misalign_Beta = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Misalign_Beta = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 1 Misalign Gamma ":
-                    Carriers[InitializedCarriers].Sensor_1_Misalign_Gamma = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_1_Misalign_Gamma = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Sample rate    ":
-                    Carriers[InitializedCarriers].Sensor_2_Sample_rate = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Sample_rate = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Scale factor X ":
-                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_X = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_X = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Scale factor Y ":
-                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_Y = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_Y = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Scale factor Z ":
-                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_Z = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_Z = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 SF Tempco X    ":
-                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_X = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_X = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 SF Tempco Y    ":
-                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Y = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Y = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 SF Tempco Z    ":
-                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Z = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Z = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Offset X       ":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_X = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Offset_X = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Offset Y       ":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Y = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Y = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Offset Z       ":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Z = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Z = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Offset Tempco X":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_X = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_X = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Offset Tempco Y":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Y = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Y = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Offset Tempco Z":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Z = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Z = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Misalign Alpha ":
-                    Carriers[InitializedCarriers].Sensor_2_Misalign_Alpha = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Misalign_Alpha = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Misalign Beta  ":
-                    Carriers[InitializedCarriers].Sensor_2_Misalign_Beta = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Misalign_Beta = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Sensor 2 Misalign Gamma ":
-                    Carriers[InitializedCarriers].Sensor_2_Misalign_Gamma = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Sensor_2_Misalign_Gamma = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Temperature offset      ":
-                    Carriers[InitializedCarriers].Temperature_offset = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Temperature_offset = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
                     break;
 
                 case "Temperature scale factor":
-                    Carriers[InitializedCarriers].Temperature_scale_factor = float.Parse(serialData.Substring(28));
+                    Carriers[InitializedCarriers].Temperature_scale_factor = float.Parse(serialData.Substring(28), CultureInfo.InvariantCulture);
+                    //Increment when done Initializing Carrier
+                    InitializedCarriers++;
                     break;
 
                 //case "No carrier at this I2C a":

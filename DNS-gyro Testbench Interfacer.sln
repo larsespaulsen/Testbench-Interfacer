@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNS-gyro Testbench Interfac
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5E40AC57-919F-44AE-A19F-5F7CEBB143A2}"
 	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
 		SERCOM.cs = SERCOM.cs
 	EndProjectSection
 EndProject
