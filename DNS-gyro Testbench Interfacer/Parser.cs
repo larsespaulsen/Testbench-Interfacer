@@ -12,6 +12,11 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Timers;
 
+//99 little bugs in the code
+//99 bugs in the code
+//Take one down, patch it around
+//117 little bugs in the code
+
 namespace DNS_gyro_Testbench_Interfacer
 {
     public partial class Interfacer
@@ -24,6 +29,8 @@ namespace DNS_gyro_Testbench_Interfacer
         //public string LogKeyWord_text;
         public static Carrier[] Carriers = new Carrier[16];
         public static int InitializedCarriers = 0;
+
+        public int CurrentCarrier;
 
         private void fileInitialize()
         {
@@ -44,101 +51,222 @@ namespace DNS_gyro_Testbench_Interfacer
         {
             //if(serialData[0] == LogKeyWord.Text[0]) file.WriteLine(serialData);
 
-            switch (serialData[0])
+            switch (serialData.Substring(0,24))
             {
-                //case '0':
-                //    set_Textbox5_Text("Address" + serialData[2] + serialData[3]);
+
+                case "Carrier I2C address     ":
+                    //Start of Initializing Carrier
+                    Carriers[InitializedCarriers] = new Carrier();
+                    Carriers[InitializedCarriers].Carrier_I2C_address = serialData.Substring(27);
+                    break;
+
+                case "Carrier serial number   ":
+                    Carriers[InitializedCarriers].Carrier_serial_number = serialData.Substring(27);
+                    Add_Carrier_List_Item(Carriers[InitializedCarriers].Carrier_serial_number + "@" + Carriers[InitializedCarriers].Carrier_I2C_address);
+
+                    //Increment when done Initializing Carrier
+                    InitializedCarriers++;
+                    break;
+
+                case "Sensor 1 name           ":
+                    Carriers[InitializedCarriers].Sensor_1_name = serialData.Substring(27);
+                    break;
+
+                case "Sensor 2 name           ":
+                    Carriers[InitializedCarriers].Sensor_2_name = serialData.Substring(27);
+                    break;
+
+                case "Sensor 1 active sensors ":
+                    Carriers[InitializedCarriers].Sensor_1_active_sensors = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 1 installed bitma":
+                    Carriers[InitializedCarriers].Sensor_1_installed_bitmap = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 1 enabled bitmap ":
+                    Carriers[InitializedCarriers].Sensor_1_enabled_bitmap = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 1 faulty bitmap  ":
+                    Carriers[InitializedCarriers].Sensor_1_faulty_bitmap = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 2 active sensors ":
+                    Carriers[InitializedCarriers].Sensor_2_active_sensors = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 2 installed bitma":
+                    Carriers[InitializedCarriers].Sensor_2_installed_bitmap = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 2 enabled bitmap ":
+                    Carriers[InitializedCarriers].Sensor_2_enabled_bitmap = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 2 faulty bitmap  ":
+                    Carriers[InitializedCarriers].Sensor_2_failty_bitmap = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Encoder offset          ":
+                    Carriers[InitializedCarriers].Encoder_offset = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 1 Raw data format":
+                    Carriers[InitializedCarriers].Sensor_1_Raw_data_format = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 2 Raw data format":
+                    Carriers[InitializedCarriers].Sensor_2_Raw_data_format = Int32.Parse(serialData.Substring(27));
+                    break;
+
+                case "Sensor 1 Sample rate    ":
+                    Carriers[InitializedCarriers].Sensor_1_Sample_rate = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Scale factor X ":
+                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_X = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Scale factor Y ":
+                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_Y = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Scale factor Z ":
+                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_Z = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 SF Tempco X    ":
+                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_X = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 SF Tempco Y    ":
+                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Y = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 SF Tempco Z    ":
+                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Z = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Offset X       ":
+                    Carriers[InitializedCarriers].Sensor_1_Offset_X = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Offset Y       ":
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Y = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Offset Z       ":
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Z = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Offset Tempco X":
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_X = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Offset Tempco Y":
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Y = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Offset Tempco Z":
+                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Z = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Misalign Alpha ":
+                    Carriers[InitializedCarriers].Sensor_1_Misalign_Alpha = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Misalign Beta  ":
+                    Carriers[InitializedCarriers].Sensor_1_Misalign_Beta = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 1 Misalign Gamma ":
+                    Carriers[InitializedCarriers].Sensor_1_Misalign_Gamma = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Sample rate    ":
+                    Carriers[InitializedCarriers].Sensor_2_Sample_rate = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Scale factor X ":
+                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_X = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Scale factor Y ":
+                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_Y = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Scale factor Z ":
+                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_Z = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 SF Tempco X    ":
+                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_X = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 SF Tempco Y    ":
+                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Y = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 SF Tempco Z    ":
+                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Z = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Offset X       ":
+                    Carriers[InitializedCarriers].Sensor_2_Offset_X = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Offset Y       ":
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Y = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Offset Z       ":
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Z = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Offset Tempco X":
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_X = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Offset Tempco Y":
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Y = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Offset Tempco Z":
+                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Z = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Misalign Alpha ":
+                    Carriers[InitializedCarriers].Sensor_2_Misalign_Alpha = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Misalign Beta  ":
+                    Carriers[InitializedCarriers].Sensor_2_Misalign_Beta = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Sensor 2 Misalign Gamma ":
+                    Carriers[InitializedCarriers].Sensor_2_Misalign_Gamma = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Temperature offset      ":
+                    Carriers[InitializedCarriers].Temperature_offset = float.Parse(serialData.Substring(28));
+                    break;
+
+                case "Temperature scale factor":
+                    Carriers[InitializedCarriers].Temperature_scale_factor = float.Parse(serialData.Substring(28));
+                    break;
+
+                //case "No carrier at this I2C a":
                 //    break;
 
-                case '2':                    
-                    set_Carrier_Text(serialData);
-                    file.WriteLine(serialData);
-                    break;
-
-                //Detect carriers
-                case 'C':
-                        switch(serialData[8])
-                        {
-                        case 'I':
-                            set_Console_Text("CASE 'I'"+serialData);
-                            Carriers[InitializedCarriers] = new Carrier();
-                            Carriers[InitializedCarriers].Carrier_I2C_address = serialData.Substring(27);
-                            break;
-
-                        case 's':
-                            set_Console_Text("CASE 's'"+serialData);
-                            Carriers[InitializedCarriers].Carrier_serial_number = serialData.Substring(27);
-                            Add_Carrier_List_Item(Carriers[InitializedCarriers].Carrier_serial_number + "@" + Carriers[InitializedCarriers].Carrier_I2C_address);
-
-                            //Increment when done
-                            InitializedCarriers++;
-                            break;
-
-                        default:
-                            set_Console_Text(serialData);
-                            break;
-                        }
-                    break;
-
                 default:
-                    set_Console_Text(serialData);
+                    Invoke(new Action(() => Console.AppendText(serialData)));
                     break;
-            }
-        }
-
-        private void set_Console_Text(string text)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (this.Console.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(set_Console_Text);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                this.Console.AppendText(text);
-            }
-        }
-
-        private void set_Carrier_Text(string text)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (this.Carrier.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(set_Carrier_Text);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                Carrier.Text = text;
-            }
-        }
-
-        private void set_Textbox5_Text(string text)
-        {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
-            if (this.Carrier_Name.InvokeRequired)
-            {
-                SetTextCallback d = new SetTextCallback(set_Textbox5_Text);
-                this.Invoke(d, new object[] { text });
-            }
-            else
-            {
-                Carrier_Name.Text = text;
             }
         }
 
         private void Add_Carrier_List_Item(string text)
         {
-            // InvokeRequired required compares the thread ID of the
-            // calling thread to the thread ID of the creating thread.
-            // If these threads are different, it returns true.
             if (this.listBox1.InvokeRequired)
             {
                 SetTextCallback d = new SetTextCallback(Add_Carrier_List_Item);
@@ -146,24 +274,13 @@ namespace DNS_gyro_Testbench_Interfacer
             }
             else
             {
-                listBox1.Items.Add(text);
+                if (!listBox1.Items.Contains(text))
+                {
+                    listBox1.Items.Add(text);
+                }
             }
         }
 
-        private void detect_Carriers()
-        {
-            listBox1.Items.Clear();
-            progressBar1.Value = 0;
-            Console.Clear();
-            int Addr;
-            for (int i = 0; i < 16; i++)
-            {
-                Addr = 20 + i;
-                serial_Write("DR" + Addr.ToString());
-                Thread.Sleep(100);
-                progressBar1.PerformStep();              
-            }
-        }
 
     }
 
@@ -218,5 +335,7 @@ namespace DNS_gyro_Testbench_Interfacer
         public float Sensor_2_Misalign_Gamma;
         public float Temperature_offset;
         public float Temperature_scale_factor;
+        //public float sensor_1_weight[16];
+        //public float sensor_2_weight[16];
     }
 }
