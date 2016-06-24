@@ -41,7 +41,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.Console = new System.Windows.Forms.RichTextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.CarrierList = new System.Windows.Forms.ListBox();
             this.bt_Reload_Carrier_List = new System.Windows.Forms.Button();
             this.bt_Set_Carrier = new System.Windows.Forms.Button();
             this.SendWorker = new System.ComponentModel.BackgroundWorker();
@@ -142,6 +142,7 @@
             this.label_Temperature_offset = new System.Windows.Forms.Label();
             this.label_Temperature_scale_factor = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.Sent = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // bt_serialConnect
@@ -239,14 +240,16 @@
             this.Console.TabIndex = 15;
             this.Console.Text = "";
             // 
-            // listBox1
+            // CarrierList
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(262, 26);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(279, 95);
-            this.listBox1.TabIndex = 17;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.CarrierList.CausesValidation = false;
+            this.CarrierList.Cursor = System.Windows.Forms.Cursors.Default;
+            this.CarrierList.FormattingEnabled = true;
+            this.CarrierList.Location = new System.Drawing.Point(262, 26);
+            this.CarrierList.Name = "CarrierList";
+            this.CarrierList.Size = new System.Drawing.Size(279, 95);
+            this.CarrierList.TabIndex = 17;
+            this.CarrierList.SelectedIndexChanged += new System.EventHandler(this.CarrierList_SelectedIndexChanged);
             // 
             // bt_Reload_Carrier_List
             // 
@@ -259,6 +262,7 @@
             // 
             // bt_Set_Carrier
             // 
+            this.bt_Set_Carrier.Enabled = false;
             this.bt_Set_Carrier.Location = new System.Drawing.Point(558, 651);
             this.bt_Set_Carrier.Name = "bt_Set_Carrier";
             this.bt_Set_Carrier.Size = new System.Drawing.Size(400, 23);
@@ -276,6 +280,7 @@
             this.Carrier_serial_number.Name = "Carrier_serial_number";
             this.Carrier_serial_number.Size = new System.Drawing.Size(100, 20);
             this.Carrier_serial_number.TabIndex = 27;
+            this.Carrier_serial_number.TextChanged += new System.EventHandler(this.Carrier_serial_number_TextChanged);
             // 
             // Sensor_1_name
             // 
@@ -283,6 +288,7 @@
             this.Sensor_1_name.Name = "Sensor_1_name";
             this.Sensor_1_name.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_name.TabIndex = 27;
+            this.Sensor_1_name.TextChanged += new System.EventHandler(this.Sensor_1_name_TextChanged);
             // 
             // Sensor_2_name
             // 
@@ -290,6 +296,7 @@
             this.Sensor_2_name.Name = "Sensor_2_name";
             this.Sensor_2_name.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_name.TabIndex = 27;
+            this.Sensor_2_name.TextChanged += new System.EventHandler(this.Sensor_2_name_TextChanged);
             // 
             // Sensor_1_active_sensors
             // 
@@ -297,6 +304,7 @@
             this.Sensor_1_active_sensors.Name = "Sensor_1_active_sensors";
             this.Sensor_1_active_sensors.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_active_sensors.TabIndex = 27;
+            this.Sensor_1_active_sensors.TextChanged += new System.EventHandler(this.Sensor_1_active_sensors_TextChanged);
             // 
             // Sensor_1_installed_bitmap
             // 
@@ -304,6 +312,7 @@
             this.Sensor_1_installed_bitmap.Name = "Sensor_1_installed_bitmap";
             this.Sensor_1_installed_bitmap.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_installed_bitmap.TabIndex = 27;
+            this.Sensor_1_installed_bitmap.TextChanged += new System.EventHandler(this.Sensor_1_installed_bitmap_TextChanged);
             // 
             // Sensor_1_enabled_bitmap
             // 
@@ -311,6 +320,7 @@
             this.Sensor_1_enabled_bitmap.Name = "Sensor_1_enabled_bitmap";
             this.Sensor_1_enabled_bitmap.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_enabled_bitmap.TabIndex = 27;
+            this.Sensor_1_enabled_bitmap.TextChanged += new System.EventHandler(this.Sensor_1_enabled_bitmap_TextChanged);
             // 
             // Sensor_1_faulty_bitmap
             // 
@@ -318,6 +328,7 @@
             this.Sensor_1_faulty_bitmap.Name = "Sensor_1_faulty_bitmap";
             this.Sensor_1_faulty_bitmap.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_faulty_bitmap.TabIndex = 27;
+            this.Sensor_1_faulty_bitmap.TextChanged += new System.EventHandler(this.Sensor_1_faulty_bitmap_TextChanged);
             // 
             // Sensor_2_active_sensors
             // 
@@ -325,6 +336,7 @@
             this.Sensor_2_active_sensors.Name = "Sensor_2_active_sensors";
             this.Sensor_2_active_sensors.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_active_sensors.TabIndex = 27;
+            this.Sensor_2_active_sensors.TextChanged += new System.EventHandler(this.Sensor_2_active_sensors_TextChanged);
             // 
             // Sensor_2_installed_bitmap
             // 
@@ -332,6 +344,7 @@
             this.Sensor_2_installed_bitmap.Name = "Sensor_2_installed_bitmap";
             this.Sensor_2_installed_bitmap.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_installed_bitmap.TabIndex = 27;
+            this.Sensor_2_installed_bitmap.TextChanged += new System.EventHandler(this.Sensor_2_installed_bitmap_TextChanged);
             // 
             // Sensor_2_enabled_bitmap
             // 
@@ -339,6 +352,7 @@
             this.Sensor_2_enabled_bitmap.Name = "Sensor_2_enabled_bitmap";
             this.Sensor_2_enabled_bitmap.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_enabled_bitmap.TabIndex = 27;
+            this.Sensor_2_enabled_bitmap.TextChanged += new System.EventHandler(this.Sensor_2_enabled_bitmap_TextChanged);
             // 
             // Sensor_2_failty_bitmap
             // 
@@ -346,6 +360,7 @@
             this.Sensor_2_failty_bitmap.Name = "Sensor_2_failty_bitmap";
             this.Sensor_2_failty_bitmap.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_failty_bitmap.TabIndex = 27;
+            this.Sensor_2_failty_bitmap.TextChanged += new System.EventHandler(this.Sensor_2_failty_bitmap_TextChanged);
             // 
             // Encoder_offset
             // 
@@ -353,6 +368,7 @@
             this.Encoder_offset.Name = "Encoder_offset";
             this.Encoder_offset.Size = new System.Drawing.Size(100, 20);
             this.Encoder_offset.TabIndex = 27;
+            this.Encoder_offset.TextChanged += new System.EventHandler(this.Encoder_offset_TextChanged);
             // 
             // Sensor_1_Raw_data_format
             // 
@@ -360,6 +376,7 @@
             this.Sensor_1_Raw_data_format.Name = "Sensor_1_Raw_data_format";
             this.Sensor_1_Raw_data_format.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Raw_data_format.TabIndex = 27;
+            this.Sensor_1_Raw_data_format.TextChanged += new System.EventHandler(this.Sensor_1_Raw_data_format_TextChanged);
             // 
             // Sensor_2_Raw_data_format
             // 
@@ -367,6 +384,7 @@
             this.Sensor_2_Raw_data_format.Name = "Sensor_2_Raw_data_format";
             this.Sensor_2_Raw_data_format.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Raw_data_format.TabIndex = 27;
+            this.Sensor_2_Raw_data_format.TextChanged += new System.EventHandler(this.Sensor_2_Raw_data_format_TextChanged);
             // 
             // Sensor_1_Sample_rate
             // 
@@ -374,6 +392,7 @@
             this.Sensor_1_Sample_rate.Name = "Sensor_1_Sample_rate";
             this.Sensor_1_Sample_rate.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Sample_rate.TabIndex = 27;
+            this.Sensor_1_Sample_rate.TextChanged += new System.EventHandler(this.Sensor_1_Sample_rate_TextChanged);
             // 
             // Sensor_1_Scale_factor_X
             // 
@@ -381,6 +400,7 @@
             this.Sensor_1_Scale_factor_X.Name = "Sensor_1_Scale_factor_X";
             this.Sensor_1_Scale_factor_X.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Scale_factor_X.TabIndex = 27;
+            this.Sensor_1_Scale_factor_X.TextChanged += new System.EventHandler(this.Sensor_1_Scale_factor_X_TextChanged);
             // 
             // Sensor_1_Scale_factor_Y
             // 
@@ -388,6 +408,7 @@
             this.Sensor_1_Scale_factor_Y.Name = "Sensor_1_Scale_factor_Y";
             this.Sensor_1_Scale_factor_Y.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Scale_factor_Y.TabIndex = 27;
+            this.Sensor_1_Scale_factor_Y.TextChanged += new System.EventHandler(this.Sensor_1_Scale_factor_Y_TextChanged);
             // 
             // Sensor_1_Scale_factor_Z
             // 
@@ -395,6 +416,7 @@
             this.Sensor_1_Scale_factor_Z.Name = "Sensor_1_Scale_factor_Z";
             this.Sensor_1_Scale_factor_Z.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Scale_factor_Z.TabIndex = 27;
+            this.Sensor_1_Scale_factor_Z.TextChanged += new System.EventHandler(this.Sensor_1_Scale_factor_Z_TextChanged);
             // 
             // Sensor_1_SF_Tempco_X
             // 
@@ -402,6 +424,7 @@
             this.Sensor_1_SF_Tempco_X.Name = "Sensor_1_SF_Tempco_X";
             this.Sensor_1_SF_Tempco_X.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_SF_Tempco_X.TabIndex = 27;
+            this.Sensor_1_SF_Tempco_X.TextChanged += new System.EventHandler(this.Sensor_1_SF_Tempco_X_TextChanged);
             // 
             // Sensor_1_SF_Tempco_Y
             // 
@@ -409,6 +432,7 @@
             this.Sensor_1_SF_Tempco_Y.Name = "Sensor_1_SF_Tempco_Y";
             this.Sensor_1_SF_Tempco_Y.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_SF_Tempco_Y.TabIndex = 27;
+            this.Sensor_1_SF_Tempco_Y.TextChanged += new System.EventHandler(this.Sensor_1_SF_Tempco_Y_TextChanged);
             // 
             // Sensor_1_SF_Tempco_Z
             // 
@@ -416,6 +440,7 @@
             this.Sensor_1_SF_Tempco_Z.Name = "Sensor_1_SF_Tempco_Z";
             this.Sensor_1_SF_Tempco_Z.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_SF_Tempco_Z.TabIndex = 27;
+            this.Sensor_1_SF_Tempco_Z.TextChanged += new System.EventHandler(this.Sensor_1_SF_Tempco_Z_TextChanged);
             // 
             // Sensor_1_Offset_X
             // 
@@ -423,6 +448,7 @@
             this.Sensor_1_Offset_X.Name = "Sensor_1_Offset_X";
             this.Sensor_1_Offset_X.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Offset_X.TabIndex = 27;
+            this.Sensor_1_Offset_X.TextChanged += new System.EventHandler(this.Sensor_1_Offset_X_TextChanged);
             // 
             // Sensor_1_Offset_Y
             // 
@@ -430,6 +456,7 @@
             this.Sensor_1_Offset_Y.Name = "Sensor_1_Offset_Y";
             this.Sensor_1_Offset_Y.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Offset_Y.TabIndex = 27;
+            this.Sensor_1_Offset_Y.TextChanged += new System.EventHandler(this.Sensor_1_Offset_Y_TextChanged);
             // 
             // Sensor_1_Offset_Z
             // 
@@ -437,6 +464,7 @@
             this.Sensor_1_Offset_Z.Name = "Sensor_1_Offset_Z";
             this.Sensor_1_Offset_Z.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Offset_Z.TabIndex = 27;
+            this.Sensor_1_Offset_Z.TextChanged += new System.EventHandler(this.Sensor_1_Offset_Z_TextChanged);
             // 
             // Sensor_1_Offset_Tempco_X
             // 
@@ -444,6 +472,7 @@
             this.Sensor_1_Offset_Tempco_X.Name = "Sensor_1_Offset_Tempco_X";
             this.Sensor_1_Offset_Tempco_X.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Offset_Tempco_X.TabIndex = 27;
+            this.Sensor_1_Offset_Tempco_X.TextChanged += new System.EventHandler(this.Sensor_1_Offset_Tempco_X_TextChanged);
             // 
             // Sensor_1_Offset_Tempco_Y
             // 
@@ -451,6 +480,7 @@
             this.Sensor_1_Offset_Tempco_Y.Name = "Sensor_1_Offset_Tempco_Y";
             this.Sensor_1_Offset_Tempco_Y.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Offset_Tempco_Y.TabIndex = 27;
+            this.Sensor_1_Offset_Tempco_Y.TextChanged += new System.EventHandler(this.Sensor_1_Offset_Tempco_Y_TextChanged);
             // 
             // Sensor_1_Offset_Tempco_Z
             // 
@@ -458,6 +488,7 @@
             this.Sensor_1_Offset_Tempco_Z.Name = "Sensor_1_Offset_Tempco_Z";
             this.Sensor_1_Offset_Tempco_Z.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Offset_Tempco_Z.TabIndex = 27;
+            this.Sensor_1_Offset_Tempco_Z.TextChanged += new System.EventHandler(this.Sensor_1_Offset_Tempco_Z_TextChanged);
             // 
             // Sensor_1_Misalign_Alpha
             // 
@@ -465,6 +496,7 @@
             this.Sensor_1_Misalign_Alpha.Name = "Sensor_1_Misalign_Alpha";
             this.Sensor_1_Misalign_Alpha.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Misalign_Alpha.TabIndex = 27;
+            this.Sensor_1_Misalign_Alpha.TextChanged += new System.EventHandler(this.Sensor_1_Misalign_Alpha_TextChanged);
             // 
             // Sensor_1_Misalign_Beta
             // 
@@ -472,6 +504,7 @@
             this.Sensor_1_Misalign_Beta.Name = "Sensor_1_Misalign_Beta";
             this.Sensor_1_Misalign_Beta.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Misalign_Beta.TabIndex = 27;
+            this.Sensor_1_Misalign_Beta.TextChanged += new System.EventHandler(this.Sensor_1_Misalign_Beta_TextChanged);
             // 
             // Sensor_1_Misalign_Gamma
             // 
@@ -479,6 +512,7 @@
             this.Sensor_1_Misalign_Gamma.Name = "Sensor_1_Misalign_Gamma";
             this.Sensor_1_Misalign_Gamma.Size = new System.Drawing.Size(100, 20);
             this.Sensor_1_Misalign_Gamma.TabIndex = 27;
+            this.Sensor_1_Misalign_Gamma.TextChanged += new System.EventHandler(this.Sensor_1_Misalign_Gamma_TextChanged);
             // 
             // Sensor_2_Sample_rate
             // 
@@ -486,6 +520,7 @@
             this.Sensor_2_Sample_rate.Name = "Sensor_2_Sample_rate";
             this.Sensor_2_Sample_rate.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Sample_rate.TabIndex = 27;
+            this.Sensor_2_Sample_rate.TextChanged += new System.EventHandler(this.Sensor_2_Sample_rate_TextChanged);
             // 
             // Sensor_2_Scale_factor_X
             // 
@@ -493,6 +528,7 @@
             this.Sensor_2_Scale_factor_X.Name = "Sensor_2_Scale_factor_X";
             this.Sensor_2_Scale_factor_X.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Scale_factor_X.TabIndex = 27;
+            this.Sensor_2_Scale_factor_X.TextChanged += new System.EventHandler(this.Sensor_2_Scale_factor_X_TextChanged);
             // 
             // Sensor_2_Scale_factor_Y
             // 
@@ -500,6 +536,7 @@
             this.Sensor_2_Scale_factor_Y.Name = "Sensor_2_Scale_factor_Y";
             this.Sensor_2_Scale_factor_Y.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Scale_factor_Y.TabIndex = 27;
+            this.Sensor_2_Scale_factor_Y.TextChanged += new System.EventHandler(this.Sensor_2_Scale_factor_Y_TextChanged);
             // 
             // Sensor_2_Scale_factor_Z
             // 
@@ -507,6 +544,7 @@
             this.Sensor_2_Scale_factor_Z.Name = "Sensor_2_Scale_factor_Z";
             this.Sensor_2_Scale_factor_Z.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Scale_factor_Z.TabIndex = 27;
+            this.Sensor_2_Scale_factor_Z.TextChanged += new System.EventHandler(this.Sensor_2_Scale_factor_Z_TextChanged);
             // 
             // Sensor_2_SF_Tempco_X
             // 
@@ -514,6 +552,7 @@
             this.Sensor_2_SF_Tempco_X.Name = "Sensor_2_SF_Tempco_X";
             this.Sensor_2_SF_Tempco_X.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_SF_Tempco_X.TabIndex = 27;
+            this.Sensor_2_SF_Tempco_X.TextChanged += new System.EventHandler(this.Sensor_2_SF_Tempco_X_TextChanged);
             // 
             // Sensor_2_SF_Tempco_Y
             // 
@@ -521,6 +560,7 @@
             this.Sensor_2_SF_Tempco_Y.Name = "Sensor_2_SF_Tempco_Y";
             this.Sensor_2_SF_Tempco_Y.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_SF_Tempco_Y.TabIndex = 27;
+            this.Sensor_2_SF_Tempco_Y.TextChanged += new System.EventHandler(this.Sensor_2_SF_Tempco_Y_TextChanged);
             // 
             // Sensor_2_SF_Tempco_Z
             // 
@@ -528,6 +568,7 @@
             this.Sensor_2_SF_Tempco_Z.Name = "Sensor_2_SF_Tempco_Z";
             this.Sensor_2_SF_Tempco_Z.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_SF_Tempco_Z.TabIndex = 27;
+            this.Sensor_2_SF_Tempco_Z.TextChanged += new System.EventHandler(this.Sensor_2_SF_Tempco_Z_TextChanged);
             // 
             // Sensor_2_Offset_X
             // 
@@ -535,6 +576,7 @@
             this.Sensor_2_Offset_X.Name = "Sensor_2_Offset_X";
             this.Sensor_2_Offset_X.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Offset_X.TabIndex = 27;
+            this.Sensor_2_Offset_X.TextChanged += new System.EventHandler(this.Sensor_2_Offset_X_TextChanged);
             // 
             // Sensor_2_Offset_Y
             // 
@@ -542,6 +584,7 @@
             this.Sensor_2_Offset_Y.Name = "Sensor_2_Offset_Y";
             this.Sensor_2_Offset_Y.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Offset_Y.TabIndex = 27;
+            this.Sensor_2_Offset_Y.TextChanged += new System.EventHandler(this.Sensor_2_Offset_Y_TextChanged);
             // 
             // Sensor_2_Offset_Z
             // 
@@ -549,6 +592,7 @@
             this.Sensor_2_Offset_Z.Name = "Sensor_2_Offset_Z";
             this.Sensor_2_Offset_Z.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Offset_Z.TabIndex = 27;
+            this.Sensor_2_Offset_Z.TextChanged += new System.EventHandler(this.Sensor_2_Offset_Z_TextChanged);
             // 
             // Sensor_2_Offset_Tempco_X
             // 
@@ -556,6 +600,7 @@
             this.Sensor_2_Offset_Tempco_X.Name = "Sensor_2_Offset_Tempco_X";
             this.Sensor_2_Offset_Tempco_X.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Offset_Tempco_X.TabIndex = 27;
+            this.Sensor_2_Offset_Tempco_X.TextChanged += new System.EventHandler(this.Sensor_2_Offset_Tempco_X_TextChanged);
             // 
             // Sensor_2_Offset_Tempco_Y
             // 
@@ -563,6 +608,7 @@
             this.Sensor_2_Offset_Tempco_Y.Name = "Sensor_2_Offset_Tempco_Y";
             this.Sensor_2_Offset_Tempco_Y.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Offset_Tempco_Y.TabIndex = 27;
+            this.Sensor_2_Offset_Tempco_Y.TextChanged += new System.EventHandler(this.Sensor_2_Offset_Tempco_Y_TextChanged);
             // 
             // Sensor_2_Offset_Tempco_Z
             // 
@@ -570,6 +616,7 @@
             this.Sensor_2_Offset_Tempco_Z.Name = "Sensor_2_Offset_Tempco_Z";
             this.Sensor_2_Offset_Tempco_Z.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Offset_Tempco_Z.TabIndex = 27;
+            this.Sensor_2_Offset_Tempco_Z.TextChanged += new System.EventHandler(this.Sensor_2_Offset_Tempco_Z_TextChanged);
             // 
             // Sensor_2_Misalign_Alpha
             // 
@@ -577,6 +624,7 @@
             this.Sensor_2_Misalign_Alpha.Name = "Sensor_2_Misalign_Alpha";
             this.Sensor_2_Misalign_Alpha.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Misalign_Alpha.TabIndex = 27;
+            this.Sensor_2_Misalign_Alpha.TextChanged += new System.EventHandler(this.Sensor_2_Misalign_Alpha_TextChanged);
             // 
             // Sensor_2_Misalign_Beta
             // 
@@ -584,6 +632,7 @@
             this.Sensor_2_Misalign_Beta.Name = "Sensor_2_Misalign_Beta";
             this.Sensor_2_Misalign_Beta.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Misalign_Beta.TabIndex = 27;
+            this.Sensor_2_Misalign_Beta.TextChanged += new System.EventHandler(this.Sensor_2_Misalign_Beta_TextChanged);
             // 
             // Sensor_2_Misalign_Gamma
             // 
@@ -591,6 +640,7 @@
             this.Sensor_2_Misalign_Gamma.Name = "Sensor_2_Misalign_Gamma";
             this.Sensor_2_Misalign_Gamma.Size = new System.Drawing.Size(100, 20);
             this.Sensor_2_Misalign_Gamma.TabIndex = 27;
+            this.Sensor_2_Misalign_Gamma.TextChanged += new System.EventHandler(this.Sensor_2_Misalign_Gamma_TextChanged);
             // 
             // Temperature_offset
             // 
@@ -598,6 +648,7 @@
             this.Temperature_offset.Name = "Temperature_offset";
             this.Temperature_offset.Size = new System.Drawing.Size(100, 20);
             this.Temperature_offset.TabIndex = 27;
+            this.Temperature_offset.TextChanged += new System.EventHandler(this.Temperature_offset_TextChanged);
             // 
             // Temperature_scale_factor
             // 
@@ -605,6 +656,7 @@
             this.Temperature_scale_factor.Name = "Temperature_scale_factor";
             this.Temperature_scale_factor.Size = new System.Drawing.Size(100, 20);
             this.Temperature_scale_factor.TabIndex = 27;
+            this.Temperature_scale_factor.TextChanged += new System.EventHandler(this.Temperature_scale_factor_TextChanged);
             // 
             // label_Carrier_serial_number
             // 
@@ -1045,15 +1097,25 @@
             this.progressBar1.Size = new System.Drawing.Size(529, 20);
             this.progressBar1.TabIndex = 29;
             // 
+            // Sent
+            // 
+            this.Sent.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.Sent.Location = new System.Drawing.Point(12, 674);
+            this.Sent.Name = "Sent";
+            this.Sent.ReadOnly = true;
+            this.Sent.Size = new System.Drawing.Size(945, 20);
+            this.Sent.TabIndex = 30;
+            // 
             // Interfacer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1023, 719);
+            this.Controls.Add(this.Sent);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.bt_Set_Carrier);
             this.Controls.Add(this.bt_Reload_Carrier_List);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.CarrierList);
             this.Controls.Add(this.Console);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.bt_send);
@@ -1188,7 +1250,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.RichTextBox Console;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox CarrierList;
         private System.Windows.Forms.Button bt_Reload_Carrier_List;
         private System.Windows.Forms.Button bt_Set_Carrier;
         private System.ComponentModel.BackgroundWorker SendWorker;
@@ -1290,6 +1352,7 @@
         private System.Windows.Forms.TextBox Temperature_scale_factor;
         private System.Windows.Forms.Label label_Temperature_scale_factor;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.TextBox Sent;
     }
 }
 

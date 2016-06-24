@@ -128,8 +128,9 @@ namespace DNS_gyro_Testbench_Interfacer
                     {
                         //set_Console_Text(txt + Environment.NewLine);
                         _serialPort.WriteLine(txt);
-                        //Give MCU time to respond
-                        Thread.Sleep(100);
+                Invoke(new Action(() => Sent.Text = txt));
+                //Give MCU time to respond
+                Thread.Sleep(100);
             }
                 catch (Exception ex)
                     {
