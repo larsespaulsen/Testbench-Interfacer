@@ -33,9 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <ApplicationIcon>favicon %281%29.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EposCmd.Net, Version=5.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\EposCmd.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -56,6 +60,7 @@
     <Compile Include="DNS-gyroTestbenchInterfacer.Designer.cs">
       <DependentUpon>DNS-gyroTestbenchInterfacer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="Parser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +95,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EposCmd.dll" />
+    <Content Include="EposCmd.Net.dll" />
+    <Content Include="EposCmd64.dll" />
+    <Content Include="favicon %281%29.ico" />
     <Content Include="favicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

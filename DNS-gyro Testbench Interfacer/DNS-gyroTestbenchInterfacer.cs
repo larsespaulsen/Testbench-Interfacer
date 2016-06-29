@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,31 +14,50 @@ using System.Windows.Forms;
 using System.Timers;
 using System.Globalization;
 using System.Collections;
+using System.IO;
+using System.Runtime.InteropServices;
+using EposCmd.Net;
+using EposCmd.Net.DeviceCmdSet.Operation;
 
 namespace DNS_gyro_Testbench_Interfacer
 {
     public partial class Interfacer : Form
     {
+        //Motor Controller
+        private StateMachine sm;
+        private DeviceManager _mConnector;
+        private Device _mEpos;
+        private ProfilePositionMode ppm;
+        private uint errorCode;
+
+
+
+        /// <summary>
+        /// Variables for implementing the logging session
+        /// </summary>
+        private bool ToggleBool = true;
+        private bool CancelLogging;
+
+        //
         private List<string> contents = new List<string>();
         private const int MAX = 50;
         private bool booted = false;
 
+        /// <summary>
+        /// Windows forms initializer
+        /// Added custom culture for "." instead of "," when parsing float to string
+        /// 
+        /// </summary>
         public Interfacer()
         {
-
-
             InitializeComponent();
+
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
             SerialInitialize();
             update_ComStatus(this, new EventArgs());
             statusStrip1.Text = "Disconnected";
-            fileInitialize();
-            
-            //var timer = new System.Windows.Forms.Timer();
-            //timer.Tick += new EventHandler(parse);
-            //timer.Interval = 100; //100 ms
-            //timer.Start();
         }
 
         private void Baudrate_TextChanged(object sender, EventArgs e)
@@ -75,7 +96,7 @@ namespace DNS_gyro_Testbench_Interfacer
         delegate void SetTextCallback(string text);
 
 
-        //open file dialog
+        //open file dialog TODO
         private void button1_Click(object sender, EventArgs e)
         {
             int size = -1;
@@ -176,7 +197,7 @@ namespace DNS_gyro_Testbench_Interfacer
                         Sensor_2_Misalign_Gamma.Text = Carriers[i].Sensor_2_Misalign_Gamma.ToString();
                         Temperature_offset.Text = Carriers[i].Temperature_offset.ToString();
                         Temperature_scale_factor.Text = Carriers[i].Temperature_scale_factor.ToString();
-
+                        cb_Logg_Enabled.Checked = Carriers[i].Logg_Active;
 
                         CurrentCarrier = i;
                     }
@@ -338,6 +359,12 @@ namespace DNS_gyro_Testbench_Interfacer
             int temp = Convert.ToUInt16(txt, 2);
             return temp.ToString();
         }
+
+        public void UpdateLoggingProgress(object sender, EventArgs e)
+        {
+                Invoke(new Action(() => LoggProgress.Increment(1)));
+        }
+
 
         #region Sensor Parameter inputs
         private void Carrier_serial_number_TextChanged(object sender, EventArgs e)
@@ -532,8 +559,324 @@ namespace DNS_gyro_Testbench_Interfacer
         {
             Carriers[CurrentCarrier].Temperature_scale_factor = float.Parse(Temperature_scale_factor.Text);
         }
+        private void cb_Logg_Enabled_CheckedChanged(object sender, EventArgs e)
+        {
+            Carriers[CurrentCarrier].Logg_Active = cb_Logg_Enabled.Checked;
+        }
         #endregion
+
+
+        public int totalTicks;
+        public int Ticks = 0;
+
+        /// <summary>
+        /// Reset variables and start Logg thread.
+        /// </summary>
+        private void InitializeLoggSession(object sender, EventArgs e)
+        {
+            Ticks = 0;
+            CancelLogging = false;
+
+
+
+
+            //Create loggfiles for enabled addresses
+            int Addr;
+            for (int i = 0; i < 16; i++)
+            {
+                Addr = 20 + i;
+                try
+                {
+                    if (Carriers[i].Logg_Active)
+                    {
+                        Carriers[i].Logg_Target = initializeLoggFile(Addr.ToString());
+                    }
+                }
+                catch
+                {
+                    //TODO
+                }
+            }
+            
+            try
+            {
+                LoggWorker.RunWorkerAsync();
+            }
+
+            catch (Exception ex)
+            {
+                if (ex is InvalidOperationException)
+                {
+                    MessageBox.Show("BUSY!");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Cancel Loggsession early.
+        /// </summary>
+        private void CancelLoggSession(object sender, EventArgs e)
+        {
+            try
+            {
+                CancelLogging = true;
+            }
+            catch (Exception ex)
+            {
+                if (ex is InvalidOperationException)
+                {
+                    MessageBox.Show("BUSY!");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Work executed in the LoggWorker thread.
+        /// TimeTick executed with a given interval.
+        /// </summary>
+        public void LoggSession(object sender, EventArgs e)
+        {
+            var timer = new System.Windows.Forms.Timer();
+            timer.Tick += new EventHandler(TimeTick);
+            timer.Interval = Int32.Parse(Toggle_Delay.Text)*1000; //1000 ms
+            timer.Start();
+            totalTicks = int.Parse(Logging_Period.Text) / (int.Parse(Toggle_Delay.Text));
+            Invoke(new Action(() => LoggProgress.Maximum = totalTicks));
+            Invoke(new Action(() => LoggProgress.Value = 0));
+            Invoke(new Action(() => LoggProgress.Maximum = totalTicks));
+
+            //MR{xx} instruction sent to MCU
+            int Addr;
+            for (int i = 0; i < 16; i++)
+            {
+                Addr = 20 + i;
+                try
+                {
+                    if (Carriers[i].Logg_Active)
+                    {
+                        serial_Write("MR" + Addr.ToString());
+                    }
+                }
+                catch
+                {
+                    //TODO
+                }
+                
+            }
+
+            while (!CancelLogging && Ticks < totalTicks)
+            {
+                Application.DoEvents();
+            }
+
+            timer.Dispose();
+
+            //Close loggfiles for enabled addresses
+            for (int i = 0; i < 16; i++)
+            {
+                Addr = 20 + i;
+                try
+                {
+                    if (Carriers[i].Logg_Active)
+                    {
+                        Carriers[i].Logg_Target.Close();
+                    }
+                }
+                catch
+                {
+                    //TODO
+                }
+            }
+        }
+
+        /// <summary>
+        /// Work to be executed with a given interval.
+        /// Toggles motor back and forth.
+        /// </summary>
+        public void TimeTick(object sender, EventArgs e)
+        {
+            Ticks++;
+            Invoke(new Action(() => LoggProgress.Increment(1)));
+
+            if (ToggleBool)
+            {
+                ppm.MoveToPosition(12, true, true);
+                ToggleBool = false;
+            }
+            else
+            {
+                ppm.MoveToPosition(0, true, true);
+                ToggleBool = true;
+            }
+            Thread.Sleep(1);
+        }
+
+
+        /// <summary>
+        /// Loggworker thread
+        /// </summary>
+        private void LoggWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Invoke(new Action(() => bt_Start_Logging.Enabled = false));
+            Invoke(new Action(() => bt_Cancel_Logging.Enabled = true));
+            LoggSession(this, e);
+            Invoke(new Action(() => bt_Start_Logging.Enabled = true));
+            Invoke(new Action(() => bt_Cancel_Logging.Enabled = false));
+        }
+
+
+
+        //Motor Controller
+        private void buttonSettings_Click(object sender, EventArgs ea)
+        {
+            try
+            {
+                if (_mConnector != null)
+                {
+                    /*                    
+                     * Important notice:
+                     * It's recommended to call the Dispose function before application close 
+                     */
+                    _mConnector.Dispose();
+                }
+
+                _mConnector = new DeviceManager();
+
+                //get baudrate info
+                uint b = _mConnector.Baudrate;
+
+                //set connection properties
+                _mConnector.Baudrate = b;
+                _mConnector.Timeout = 500;
+                    
+                //buttonEnable.Enabled = true;
+            }
+            catch (DeviceException e)
+            {
+                //StopRefresh();
+                ShowMessageBox(e.ErrorMessage, e.ErrorCode);
+            }
+            catch (Exception e)
+            {
+                //StopRefresh();
+
+                MessageBox.Show(e.Message);
+            }
+
+            try
+            {
+                _mEpos = _mConnector.CreateDevice(Convert.ToUInt16(Convert.ToUInt16("1")));
+
+                sm = _mEpos.Operation.StateMachine;
+
+                if (sm.GetFaultState())
+                    sm.ClearFault();
+
+                sm.SetEnableState();
+
+                ppm = _mEpos.Operation.ProfilePositionMode;
+                ppm.ActivateProfilePositionMode();
+
+                
+            }
+            catch (DeviceException e)
+            {
+                ShowMessageBox(e.ErrorMessage, e.ErrorCode);
+            }
+            catch(AccessViolationException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            Motor1_status();
+        }
+
+        
+        /// <summary>
+        /// Set Motor Velocity and Acceleration.
+        /// </summary>
+        private void bt_Motor1_Save_Setting_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ppm.SetPositionProfile(UInt32.Parse(Motor1_Velocity.Text), UInt32.Parse(Motor1_Acceleration.Text), UInt32.Parse(Motor1_Acceleration.Text));
+            }
+            catch (Exception ex)
+            {
+                if (ex is DeviceException || ex is OverflowException)
+                {
+                    MessageBox.Show("Failed to update Velocity and Acceleration.\nRead manual for valid values.");
+                }
+                else if (ex is InvalidOperationException)
+                {
+                    MessageBox.Show("Invalid Operation.");
+                }
+                else if (ex is FormatException)
+                {
+                    MessageBox.Show("Invalid formating.");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Shows Error Message
+        /// </summary>
+        private void ShowMessageBox(string text, uint errorCode)
+        {
+            string msg;
+
+            msg = String.Format("{0}\nErrorCode: {1:X8}", text, errorCode);
+            MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void Motor1_status()
+        {
+            //DEBUG COMPANION
+            Invoke(new Action(() => Console.Text = errorCode.ToString()));
+            //TODO FIX MOTOR STATUS
+
+            if (errorCode == 0)
+            {
+                Motor1_Status.BackColor = Color.Green;
+                Motor1_Status.Text = "";
+
+                bt_Start_Logging.Enabled = true;
+                bt_Motor1_Save_Setting.Enabled = true;
+            }
+            else
+            {
+                Motor1_Status.BackColor = Color.Red;
+                Motor1_Status.Text = errorCode.ToString();
+            }
+        }
+
+        private void Interfacer_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
+
 
 
 }

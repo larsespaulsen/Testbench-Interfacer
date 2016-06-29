@@ -16,3 +16,4 @@ C:\Users\Lars Erik S Paulsen\Documents\Visual Studio 2015\Projects\DNS-gyro-Test
 C:\Users\Lars Erik S Paulsen\Documents\Visual Studio 2015\Projects\DNS-gyro-Testbench-Interfacer\DNS-gyro Testbench Interfacer\obj\Debug\DNS-gyro Testbench Interfacer.csproj.GenerateResource.Cache
 C:\Users\Lars Erik S Paulsen\Documents\Visual Studio 2015\Projects\DNS-gyro-Testbench-Interfacer\DNS-gyro Testbench Interfacer\bin\Debug\DNS-gyro Testbench Interfacer.exe
 C:\Users\Lars Erik S Paulsen\Documents\Visual Studio 2015\Projects\DNS-gyro-Testbench-Interfacer\DNS-gyro Testbench Interfacer\bin\Debug\DNS-gyro Testbench Interfacer.pdb
+C:\Users\Lars Erik S Paulsen\Documents\Visual Studio 2015\Projects\DNS-gyro-Testbench-Interfacer\DNS-gyro Testbench Interfacer\bin\Debug\EposCmd.Net.dll

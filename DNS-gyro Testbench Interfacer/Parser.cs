@@ -22,33 +22,31 @@ namespace DNS_gyro_Testbench_Interfacer
 {
     public partial class Interfacer
     {
-        private string startUpPath;
-        private string currentLogFileName;
-        private string logfolder;
-        FileStream fs;
-        StreamWriter file;
+
+        
         //public string LogKeyWord_text;
         public static Carrier[] Carriers = new Carrier[16];
         public static int InitializedCarriers = 0;
         System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
         public int CurrentCarrier;
 
-        private void fileInitialize()
+        private StreamWriter initializeLoggFile(string CarrierAddress)
         {
-            
+            FileStream fs;
+            StreamWriter file;
+            string startUpPath;
+            string currentLogFileName;
+            string logfolder;
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             //TODO Check if file and folders excists
-            currentLogFileName = string.Format("{0:yyyy-MM-dd-HH-mm-ss}", DateTime.Now) + ".txt";// There are following custom format specifiers y (year), M (month), d (day), h (hour 12), H (hour 24), m (minute), s (second), f (second fraction), F (second fraction, trailing zeroes are trimmed), t (P.M or A.M) and z (time zone).
-            startUpPath = /*TODO RELEASE USES CURRENT DIR + \log*/ Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "log");
+            currentLogFileName = string.Format("{0:yyyy-MM-dd-HH-mm-ss}", DateTime.Now) + "Carrier@" + CarrierAddress + ".txt";// There are following custom format specifiers y (year), M (month), d (day), h (hour 12), H (hour 24), m (minute), s (second), f (second fraction), F (second fraction, trailing zeroes are trimmed), t (P.M or A.M) and z (time zone).
+            startUpPath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "log");
             logfolder = Path.Combine(startUpPath, currentLogFileName);
             fs = File.Create(logfolder);
             file = new StreamWriter(fs);
+            return file;
         }
 
-        private void fileClose()
-        {
-            file.Close();
-        }
 
         private void parse(object sender, EventArgs e)
         {
@@ -57,10 +55,10 @@ namespace DNS_gyro_Testbench_Interfacer
 
             switch (serialData.Substring(0,24))
             {
-
                 case "Carrier I2C address     ":
                     //Start of Initializing Carrier
                     Carriers[InitializedCarriers] = new Carrier();
+                    Carriers[InitializedCarriers].Logg_Active = false;
                     Carriers[InitializedCarriers].Carrier_I2C_address = serialData.Substring(27);
                     break;
 
@@ -269,8 +267,27 @@ namespace DNS_gyro_Testbench_Interfacer
                 //case "No carrier at this I2C a":
                 //    break;
 
+
+
+                
+
                 default:
-                    Invoke(new Action(() => Console.AppendText(serialData)));
+
+                    switch (serialData.Substring(0, 2))
+                    {
+                        case "20":
+                            if (Carriers[0].Logg_Active)
+                            {
+                                Carriers[0].Logg_Target.WriteLine(serialData);
+                                //TODO EXEPTIONS
+                            }
+                                
+                            break;
+
+                        default:
+                            Invoke(new Action(() => Console.AppendText(serialData)));
+                            break;
+                    }
                     break;
             }
         }
@@ -347,5 +364,8 @@ namespace DNS_gyro_Testbench_Interfacer
         public float Temperature_scale_factor;
         //public float sensor_1_weight[16];
         //public float sensor_2_weight[16];
+
+        public bool Logg_Active;
+        public StreamWriter Logg_Target;
     }
 }
