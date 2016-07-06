@@ -49,14 +49,14 @@ namespace DNS_gyro_Testbench_Interfacer
             StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
             if (!_continue)
             {
-                Console.Clear();
-                _serialPort.Open();
-                _continue = true;
-                ReceiveWorker.RunWorkerAsync();
-                bt_serialConnect.Text = "Disconnect";
-                statusStrip1.Text = "Connected";
                 try
                 {
+                    Console.Clear();
+                    _serialPort.Open();
+                    _continue = true;
+                    ReceiveWorker.RunWorkerAsync();
+                    bt_serialConnect.Text = "Disconnect";
+                    statusStrip1.Text = "Connected";
                     SendWorker.RunWorkerAsync();
                 }
                 catch (Exception ex)
@@ -64,6 +64,10 @@ namespace DNS_gyro_Testbench_Interfacer
                     if (ex is InvalidOperationException)
                     {
                         MessageBox.Show("BUSY!");
+                    }
+                    if (ex is System.IO.IOException)
+                    {
+                        MessageBox.Show("Invalid Connection Parameters.");
                     }
                     else
                     {

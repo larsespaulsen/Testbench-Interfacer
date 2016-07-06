@@ -23,7 +23,8 @@ namespace DNS_gyro_Testbench_Interfacer
     public partial class Interfacer
     {
 
-        
+        int increment = 0;
+
         //public string LogKeyWord_text;
         public static Carrier[] Carriers = new Carrier[16];
         public static int InitializedCarriers = 0;
@@ -53,11 +54,15 @@ namespace DNS_gyro_Testbench_Interfacer
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
             //if(serialData[0] == LogKeyWord.Text[0]) file.WriteLine(serialData);
 
-            switch (serialData.Substring(0,24))
+            try {
+
+            #region ParseSerialdata
+            switch (serialData.Substring(0, 24))
             {
                 case "Carrier I2C address     ":
                     //Start of Initializing Carrier
                     Carriers[InitializedCarriers] = new Carrier();
+                    Carriers[InitializedCarriers].found = true;
                     Carriers[InitializedCarriers].Logg_Active = false;
                     Carriers[InitializedCarriers].Carrier_I2C_address = serialData.Substring(27);
                     break;
@@ -66,7 +71,7 @@ namespace DNS_gyro_Testbench_Interfacer
                     Carriers[InitializedCarriers].Carrier_serial_number = serialData.Substring(27);
                     Add_Carrier_List_Item(Carriers[InitializedCarriers].Carrier_serial_number + "@" + Carriers[InitializedCarriers].Carrier_I2C_address);
 
-                    
+
                     break;
 
                 case "Sensor 1 name           ":
@@ -119,7 +124,7 @@ namespace DNS_gyro_Testbench_Interfacer
 
                 case "Sensor 2 Raw data format":
                     Carriers[InitializedCarriers].Sensor_2_Raw_data_format = serialData.Substring(27);
-                    
+
                     break;
 
                 case "Sensor 1 Sample rate    ":
@@ -251,25 +256,63 @@ namespace DNS_gyro_Testbench_Interfacer
                     break;
 
                 case "Temperature offset      ":
-                    Carriers[InitializedCarriers].Temperature_offset = float.Parse(serialData.Substring(28));
-                    break;
+                    
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Temperature_offset = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Temperature_offset = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Temperature scale factor":
-                    Carriers[InitializedCarriers].Temperature_scale_factor = float.Parse(serialData.Substring(28));
-                    //Increment when done Initializing Carrier
-                    InitializedCarriers++;
 
-                    break;
+                        //DEBUGG BUDDY
+                        //Invoke(new Action(() => Console.Text = "SERDATA:" + serialData.Substring(27,9)));
+                        //Thread.Sleep(4000);
+
+                        if (serialData.Substring(27,9).Equals("undefined"))
+                            {
+                            Carriers[InitializedCarriers].Temperature_scale_factor = float.NaN;
+                            }
+                        else
+                            {                            
+                            Carriers[InitializedCarriers].Temperature_scale_factor = float.Parse(serialData.Substring(28));
+                            }
+                    
+
+
+                        //Increment when done Initializing Carrier
+                        InitializedCarriers++;
+                        break;
+
                 case "No such data or command ":
                     Invoke(new Action(() => sendMessage.Clear()));
                     break;
 
-                //case "No carrier at this I2C a":
-                //    break;
+                case "No carrier at this I2C a":
+                        //TODO delete carrier instances  that has disconnected
+                        try
+                        {
+                            Carriers[InitializedCarriers] = new Carrier();
+                            Carriers[InitializedCarriers].found = false;
+                            //Increment when done Initializing Carrier
+                            InitializedCarriers++;
+                        }
+                        catch
+                        {
+
+                        }
+
+
+                        break;
 
 
 
-                
+
 
                 default:
 
@@ -281,14 +324,129 @@ namespace DNS_gyro_Testbench_Interfacer
                                 Carriers[0].Logg_Target.WriteLine(serialData);
                                 //TODO EXEPTIONS
                             }
-                                
                             break;
+
+                        case "21":
+                            if (Carriers[1].Logg_Active)
+                            {
+                                Carriers[1].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "22":
+                            if (Carriers[2].Logg_Active)
+                            {
+                                Carriers[2].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "23":
+                            if (Carriers[3].Logg_Active)
+                            {
+                                Carriers[3].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "24":
+                            if (Carriers[4].Logg_Active)
+                            {
+                                Carriers[4].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "25":
+                            if (Carriers[5].Logg_Active)
+                            {
+                                Carriers[5].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "26":
+                            if (Carriers[6].Logg_Active)
+                            {
+                                Carriers[6].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "27":
+                            if (Carriers[7].Logg_Active)
+                            {
+                                Carriers[7].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "28":
+                            if (Carriers[8].Logg_Active)
+                            {
+                                Carriers[8].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "29":
+                            if (Carriers[9].Logg_Active)
+                            {
+                                Carriers[9].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "30":
+                            if (Carriers[10].Logg_Active)
+                            {
+                                Carriers[10].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "31":
+                            if (Carriers[11].Logg_Active)
+                            {
+                                Carriers[11].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "32":
+                            if (Carriers[12].Logg_Active)
+                            {
+                                Carriers[12].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "33":
+                            if (Carriers[13].Logg_Active)
+                            {
+                                Carriers[13].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "34":
+                            if (Carriers[14].Logg_Active)
+                            {
+                                Carriers[14].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
+                        case "35":
+                            if (Carriers[15].Logg_Active)
+                            {
+                                Carriers[15].Logg_Target.WriteLine(serialData);
+                            }
+                            break;
+
 
                         default:
                             Invoke(new Action(() => Console.AppendText(serialData)));
                             break;
                     }
                     break;
+            }
+            #endregion
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                //TODO
+            }
+            catch (Exception ex)
+            {
+            Invoke(new Action(() => Console.Text = "Parsing failed with error: " + ex.Message + "\n when parsing: " + serialData));
             }
         }
 
@@ -313,6 +471,7 @@ namespace DNS_gyro_Testbench_Interfacer
 
     public class Carrier
     {
+        public bool found;
         public string Carrier_I2C_address;
         public string Carrier_serial_number;
         public string Sensor_1_name;

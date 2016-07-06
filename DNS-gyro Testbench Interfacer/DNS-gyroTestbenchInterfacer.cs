@@ -23,20 +23,21 @@ namespace DNS_gyro_Testbench_Interfacer
 {
     public partial class Interfacer : Form
     {
+        int findCarrierTarget;
+
+
         //Motor Controller
-        private StateMachine sm;
-        private DeviceManager _mConnector;
-        private Device _mEpos;
-        private ProfilePositionMode ppm;
-        private uint errorCode;
+        //private StateMachine sm;
+        //private DeviceManager _mConnector;
+        //private Device _mEpos;
+        //private ProfilePositionMode ppm;
+        //private uint errorCode;
+        MotorController motor1 = new MotorController();
+        MotorController motor2 = new MotorController();
+        MotorController motor3 = new MotorController();
 
 
 
-        /// <summary>
-        /// Variables for implementing the logging session
-        /// </summary>
-        private bool ToggleBool = true;
-        private bool CancelLogging;
 
         //
         private List<string> contents = new List<string>();
@@ -142,64 +143,69 @@ namespace DNS_gyro_Testbench_Interfacer
             Invoke(new Action(() => bt_Set_Carrier.Enabled = true));
             string selected = CarrierList.GetItemText(CarrierList.SelectedItem);
 
+            //DEBUGG BUDDY
+            //Invoke(new Action(() => Console.Text = InitializedCarriers.ToString()));
 
             for (int i = 0; i < InitializedCarriers; i++)
             {
                 try
                 {
-                    if (Carriers[i].Carrier_serial_number.Substring(0, 4) == selected.Substring(0, 4))
+                    if (Carriers[i].found)
                     {
-                        Carrier_serial_number.Text = Carriers[i].Carrier_serial_number;
-                        Sensor_1_name.Text = Carriers[i].Sensor_1_name;
-                        Sensor_2_name.Text = Carriers[i].Sensor_2_name;
-                        Sensor_1_active_sensors.Text = Carriers[i].Sensor_1_active_sensors.ToString();
-                        Sensor_1_installed_bitmap.Text = Carriers[i].Sensor_1_installed_bitmap.ToString();
-                        Sensor_1_enabled_bitmap.Text = Carriers[i].Sensor_1_enabled_bitmap.ToString();
-                        Sensor_1_faulty_bitmap.Text = Carriers[i].Sensor_1_faulty_bitmap.ToString();
-                        Sensor_2_active_sensors.Text = Carriers[i].Sensor_2_active_sensors.ToString();
-                        Sensor_2_installed_bitmap.Text = Carriers[i].Sensor_2_installed_bitmap.ToString();
-                        Sensor_2_enabled_bitmap.Text = Carriers[i].Sensor_2_enabled_bitmap.ToString();
-                        Sensor_2_failty_bitmap.Text = Carriers[i].Sensor_2_failty_bitmap.ToString();
-                        Encoder_offset.Text = Carriers[i].Encoder_offset.ToString();
-                        Sensor_1_Raw_data_format.Text = Carriers[i].Sensor_1_Raw_data_format.ToString();
-                        Sensor_2_Raw_data_format.Text = Carriers[i].Sensor_2_Raw_data_format.ToString();
-                        Sensor_1_Sample_rate.Text = Carriers[i].Sensor_1_Sample_rate.ToString();
-                        Sensor_1_Scale_factor_X.Text = Carriers[i].Sensor_1_Scale_factor_X.ToString();
-                        Sensor_1_Scale_factor_Y.Text = Carriers[i].Sensor_1_Scale_factor_Y.ToString();
-                        Sensor_1_Scale_factor_Z.Text = Carriers[i].Sensor_1_Scale_factor_Z.ToString();
-                        Sensor_1_SF_Tempco_X.Text = Carriers[i].Sensor_1_SF_Tempco_X.ToString();
-                        Sensor_1_SF_Tempco_Y.Text = Carriers[i].Sensor_1_SF_Tempco_Y.ToString();
-                        Sensor_1_SF_Tempco_Z.Text = Carriers[i].Sensor_1_SF_Tempco_Z.ToString();
-                        Sensor_1_Offset_X.Text = Carriers[i].Sensor_1_Offset_X.ToString();
-                        Sensor_1_Offset_Y.Text = Carriers[i].Sensor_1_Offset_Y.ToString();
-                        Sensor_1_Offset_Z.Text = Carriers[i].Sensor_1_Offset_Z.ToString();
-                        Sensor_1_Offset_Tempco_X.Text = Carriers[i].Sensor_1_Offset_Tempco_X.ToString();
-                        Sensor_1_Offset_Tempco_Y.Text = Carriers[i].Sensor_1_Offset_Tempco_Y.ToString();
-                        Sensor_1_Offset_Tempco_Z.Text = Carriers[i].Sensor_1_Offset_Tempco_Z.ToString();
-                        Sensor_1_Misalign_Alpha.Text = Carriers[i].Sensor_1_Misalign_Alpha.ToString();
-                        Sensor_1_Misalign_Beta.Text = Carriers[i].Sensor_1_Misalign_Beta.ToString();
-                        Sensor_1_Misalign_Gamma.Text = Carriers[i].Sensor_1_Misalign_Gamma.ToString();
-                        Sensor_2_Sample_rate.Text = Carriers[i].Sensor_2_Sample_rate.ToString();
-                        Sensor_2_Scale_factor_X.Text = Carriers[i].Sensor_2_Scale_factor_X.ToString();
-                        Sensor_2_Scale_factor_Y.Text = Carriers[i].Sensor_2_Scale_factor_Y.ToString();
-                        Sensor_2_Scale_factor_Z.Text = Carriers[i].Sensor_2_Scale_factor_Z.ToString();
-                        Sensor_2_SF_Tempco_X.Text = Carriers[i].Sensor_2_SF_Tempco_X.ToString();
-                        Sensor_2_SF_Tempco_Y.Text = Carriers[i].Sensor_2_SF_Tempco_Y.ToString();
-                        Sensor_2_SF_Tempco_Z.Text = Carriers[i].Sensor_2_SF_Tempco_Z.ToString();
-                        Sensor_2_Offset_X.Text = Carriers[i].Sensor_2_Offset_X.ToString();
-                        Sensor_2_Offset_Y.Text = Carriers[i].Sensor_2_Offset_Y.ToString();
-                        Sensor_2_Offset_Z.Text = Carriers[i].Sensor_2_Offset_Z.ToString();
-                        Sensor_2_Offset_Tempco_X.Text = Carriers[i].Sensor_2_Offset_Tempco_X.ToString();
-                        Sensor_2_Offset_Tempco_Y.Text = Carriers[i].Sensor_2_Offset_Tempco_Y.ToString();
-                        Sensor_2_Offset_Tempco_Z.Text = Carriers[i].Sensor_2_Offset_Tempco_Z.ToString();
-                        Sensor_2_Misalign_Alpha.Text = Carriers[i].Sensor_2_Misalign_Alpha.ToString();
-                        Sensor_2_Misalign_Beta.Text = Carriers[i].Sensor_2_Misalign_Beta.ToString();
-                        Sensor_2_Misalign_Gamma.Text = Carriers[i].Sensor_2_Misalign_Gamma.ToString();
-                        Temperature_offset.Text = Carriers[i].Temperature_offset.ToString();
-                        Temperature_scale_factor.Text = Carriers[i].Temperature_scale_factor.ToString();
-                        cb_Logg_Enabled.Checked = Carriers[i].Logg_Active;
+                        if (Carriers[i].Carrier_serial_number.Substring(0, 4) == selected.Substring(0, 4))
+                        {
+                            Carrier_serial_number.Text = Carriers[i].Carrier_serial_number;
+                            Sensor_1_name.Text = Carriers[i].Sensor_1_name;
+                            Sensor_2_name.Text = Carriers[i].Sensor_2_name;
+                            Sensor_1_active_sensors.Text = Carriers[i].Sensor_1_active_sensors.ToString();
+                            Sensor_1_installed_bitmap.Text = Carriers[i].Sensor_1_installed_bitmap.ToString();
+                            Sensor_1_enabled_bitmap.Text = Carriers[i].Sensor_1_enabled_bitmap.ToString();
+                            Sensor_1_faulty_bitmap.Text = Carriers[i].Sensor_1_faulty_bitmap.ToString();
+                            Sensor_2_active_sensors.Text = Carriers[i].Sensor_2_active_sensors.ToString();
+                            Sensor_2_installed_bitmap.Text = Carriers[i].Sensor_2_installed_bitmap.ToString();
+                            Sensor_2_enabled_bitmap.Text = Carriers[i].Sensor_2_enabled_bitmap.ToString();
+                            Sensor_2_failty_bitmap.Text = Carriers[i].Sensor_2_failty_bitmap.ToString();
+                            Encoder_offset.Text = Carriers[i].Encoder_offset.ToString();
+                            Sensor_1_Raw_data_format.Text = Carriers[i].Sensor_1_Raw_data_format.ToString();
+                            Sensor_2_Raw_data_format.Text = Carriers[i].Sensor_2_Raw_data_format.ToString();
+                            Sensor_1_Sample_rate.Text = Carriers[i].Sensor_1_Sample_rate.ToString();
+                            Sensor_1_Scale_factor_X.Text = Carriers[i].Sensor_1_Scale_factor_X.ToString();
+                            Sensor_1_Scale_factor_Y.Text = Carriers[i].Sensor_1_Scale_factor_Y.ToString();
+                            Sensor_1_Scale_factor_Z.Text = Carriers[i].Sensor_1_Scale_factor_Z.ToString();
+                            Sensor_1_SF_Tempco_X.Text = Carriers[i].Sensor_1_SF_Tempco_X.ToString();
+                            Sensor_1_SF_Tempco_Y.Text = Carriers[i].Sensor_1_SF_Tempco_Y.ToString();
+                            Sensor_1_SF_Tempco_Z.Text = Carriers[i].Sensor_1_SF_Tempco_Z.ToString();
+                            Sensor_1_Offset_X.Text = Carriers[i].Sensor_1_Offset_X.ToString();
+                            Sensor_1_Offset_Y.Text = Carriers[i].Sensor_1_Offset_Y.ToString();
+                            Sensor_1_Offset_Z.Text = Carriers[i].Sensor_1_Offset_Z.ToString();
+                            Sensor_1_Offset_Tempco_X.Text = Carriers[i].Sensor_1_Offset_Tempco_X.ToString();
+                            Sensor_1_Offset_Tempco_Y.Text = Carriers[i].Sensor_1_Offset_Tempco_Y.ToString();
+                            Sensor_1_Offset_Tempco_Z.Text = Carriers[i].Sensor_1_Offset_Tempco_Z.ToString();
+                            Sensor_1_Misalign_Alpha.Text = Carriers[i].Sensor_1_Misalign_Alpha.ToString();
+                            Sensor_1_Misalign_Beta.Text = Carriers[i].Sensor_1_Misalign_Beta.ToString();
+                            Sensor_1_Misalign_Gamma.Text = Carriers[i].Sensor_1_Misalign_Gamma.ToString();
+                            Sensor_2_Sample_rate.Text = Carriers[i].Sensor_2_Sample_rate.ToString();
+                            Sensor_2_Scale_factor_X.Text = Carriers[i].Sensor_2_Scale_factor_X.ToString();
+                            Sensor_2_Scale_factor_Y.Text = Carriers[i].Sensor_2_Scale_factor_Y.ToString();
+                            Sensor_2_Scale_factor_Z.Text = Carriers[i].Sensor_2_Scale_factor_Z.ToString();
+                            Sensor_2_SF_Tempco_X.Text = Carriers[i].Sensor_2_SF_Tempco_X.ToString();
+                            Sensor_2_SF_Tempco_Y.Text = Carriers[i].Sensor_2_SF_Tempco_Y.ToString();
+                            Sensor_2_SF_Tempco_Z.Text = Carriers[i].Sensor_2_SF_Tempco_Z.ToString();
+                            Sensor_2_Offset_X.Text = Carriers[i].Sensor_2_Offset_X.ToString();
+                            Sensor_2_Offset_Y.Text = Carriers[i].Sensor_2_Offset_Y.ToString();
+                            Sensor_2_Offset_Z.Text = Carriers[i].Sensor_2_Offset_Z.ToString();
+                            Sensor_2_Offset_Tempco_X.Text = Carriers[i].Sensor_2_Offset_Tempco_X.ToString();
+                            Sensor_2_Offset_Tempco_Y.Text = Carriers[i].Sensor_2_Offset_Tempco_Y.ToString();
+                            Sensor_2_Offset_Tempco_Z.Text = Carriers[i].Sensor_2_Offset_Tempco_Z.ToString();
+                            Sensor_2_Misalign_Alpha.Text = Carriers[i].Sensor_2_Misalign_Alpha.ToString();
+                            Sensor_2_Misalign_Beta.Text = Carriers[i].Sensor_2_Misalign_Beta.ToString();
+                            Sensor_2_Misalign_Gamma.Text = Carriers[i].Sensor_2_Misalign_Gamma.ToString();
+                            Temperature_offset.Text = Carriers[i].Temperature_offset.ToString();
+                            Temperature_scale_factor.Text = Carriers[i].Temperature_scale_factor.ToString();
+                            cb_Logg_Enabled.Checked = Carriers[i].Logg_Active;
 
-                        CurrentCarrier = i;
+                            CurrentCarrier = i;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -214,7 +220,7 @@ namespace DNS_gyro_Testbench_Interfacer
                     }
                     else
                     {
-                        throw;
+                        MessageBox.Show(ex.ToString());
                     }
                 }
             }
@@ -305,8 +311,6 @@ namespace DNS_gyro_Testbench_Interfacer
 
         }
 
-
-
         private void Find_Carriers(object sender, DoWorkEventArgs e)
         {
             Invoke(new Action(() => CarrierList.Enabled = false));
@@ -315,11 +319,11 @@ namespace DNS_gyro_Testbench_Interfacer
                 Invoke(new Action(() => progressBar1.Maximum = 16));
                 Invoke(new Action(() => progressBar1.Value = 0));
                 Invoke(new Action(() => Console.Clear()));
-                int Addr;
+
                 for (int i = 0; i < 16; i++)
                 {
-                    Addr = 20 + i;
-                    serial_Write("DR" + Addr.ToString());
+                    findCarrierTarget = 20 + i;
+                    serial_Write("DR" + findCarrierTarget.ToString());
                     Invoke(new Action(() => progressBar1.Increment(1)));
                 }
             }
@@ -327,13 +331,29 @@ namespace DNS_gyro_Testbench_Interfacer
             {
                 MessageBox.Show("No active connection");
             }
-            Invoke(new Action(() => CarrierList.SetSelected(0,true)));
+            
+
+            try
+            { 
+                Invoke(new Action(() => CarrierList.SetSelected(0, true)));
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    MessageBox.Show("No carriers detected!");
+                }
+                else
+                {
+                    //throw;
+                }
+            }
             Invoke(new Action(() => CarrierList_SelectedIndexChanged(this, e)));
             Invoke(new Action(() => CarrierList.Enabled = true));
             Invoke(new Action(() => bt_Reload_Carrier_List.Enabled = true));
         }
 
-        private void bt_Reload_Carrier_List_Click_1(object sender, EventArgs e)
+        private void bt_Reload_Carrier_List_Click_1(object sender, EventArgs e)//REDUNDANT?
         {
             try
             {
@@ -566,6 +586,12 @@ namespace DNS_gyro_Testbench_Interfacer
         #endregion
 
 
+
+        /// <summary>
+        /// Variables for implementing the logging session
+        /// </summary>
+        private bool ToggleBool = true;
+        private bool CancelLogging;
         public int totalTicks;
         public int Ticks = 0;
 
@@ -576,20 +602,16 @@ namespace DNS_gyro_Testbench_Interfacer
         {
             Ticks = 0;
             CancelLogging = false;
-
-
-
-
+            
             //Create loggfiles for enabled addresses
             int Addr;
             for (int i = 0; i < 16; i++)
             {
-                Addr = 20 + i;
                 try
                 {
                     if (Carriers[i].Logg_Active)
                     {
-                        Carriers[i].Logg_Target = initializeLoggFile(Addr.ToString());
+                        Carriers[i].Logg_Target = initializeLoggFile(Carriers[i].Carrier_I2C_address.Substring(2, 2));
                     }
                 }
                 catch
@@ -656,15 +678,13 @@ namespace DNS_gyro_Testbench_Interfacer
             Invoke(new Action(() => LoggProgress.Maximum = totalTicks));
 
             //MR{xx} instruction sent to MCU
-            int Addr;
             for (int i = 0; i < 16; i++)
             {
-                Addr = 20 + i;
                 try
                 {
                     if (Carriers[i].Logg_Active)
                     {
-                        serial_Write("MR" + Addr.ToString());
+                        serial_Write("MR" + Carriers[i].Carrier_I2C_address.Substring(2,2));
                     }
                 }
                 catch
@@ -684,11 +704,11 @@ namespace DNS_gyro_Testbench_Interfacer
             //Close loggfiles for enabled addresses
             for (int i = 0; i < 16; i++)
             {
-                Addr = 20 + i;
                 try
                 {
                     if (Carriers[i].Logg_Active)
                     {
+                        serial_Write("M0" + Carriers[i].Carrier_I2C_address.Substring(2, 2)); // TODO stop polling
                         Carriers[i].Logg_Target.Close();
                     }
                 }
@@ -710,12 +730,15 @@ namespace DNS_gyro_Testbench_Interfacer
 
             if (ToggleBool)
             {
-                ppm.MoveToPosition(12, true, true);
+                motor1.absoluteMoveTo(12);
+                motor2.absoluteMoveTo(12);
+
                 ToggleBool = false;
             }
             else
             {
-                ppm.MoveToPosition(0, true, true);
+                motor1.absoluteMoveTo(0);
+                motor2.absoluteMoveTo(0);
                 ToggleBool = true;
             }
             Thread.Sleep(1);
@@ -736,143 +759,90 @@ namespace DNS_gyro_Testbench_Interfacer
 
 
 
-        //Motor Controller
-        private void buttonSettings_Click(object sender, EventArgs ea)
-        {
-            try
-            {
-                if (_mConnector != null)
-                {
-                    /*                    
-                     * Important notice:
-                     * It's recommended to call the Dispose function before application close 
-                     */
-                    _mConnector.Dispose();
-                }
-
-                _mConnector = new DeviceManager();
-
-                //get baudrate info
-                uint b = _mConnector.Baudrate;
-
-                //set connection properties
-                _mConnector.Baudrate = b;
-                _mConnector.Timeout = 500;
-                    
-                //buttonEnable.Enabled = true;
-            }
-            catch (DeviceException e)
-            {
-                //StopRefresh();
-                ShowMessageBox(e.ErrorMessage, e.ErrorCode);
-            }
-            catch (Exception e)
-            {
-                //StopRefresh();
-
-                MessageBox.Show(e.Message);
-            }
-
-            try
-            {
-                _mEpos = _mConnector.CreateDevice(Convert.ToUInt16(Convert.ToUInt16("1")));
-
-                sm = _mEpos.Operation.StateMachine;
-
-                if (sm.GetFaultState())
-                    sm.ClearFault();
-
-                sm.SetEnableState();
-
-                ppm = _mEpos.Operation.ProfilePositionMode;
-                ppm.ActivateProfilePositionMode();
-
-                
-            }
-            catch (DeviceException e)
-            {
-                ShowMessageBox(e.ErrorMessage, e.ErrorCode);
-            }
-            catch(AccessViolationException e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            Motor1_status();
-        }
-
-        
         /// <summary>
-        /// Set Motor Velocity and Acceleration.
+        /// Setup Motor1.
         /// </summary>
-        private void bt_Motor1_Save_Setting_Click(object sender, EventArgs e)
+        private void bt_Motor1_Setup_Click(object sender, EventArgs ea)
         {
             try
             {
-                ppm.SetPositionProfile(UInt32.Parse(Motor1_Velocity.Text), UInt32.Parse(Motor1_Acceleration.Text), UInt32.Parse(Motor1_Acceleration.Text));
-            }
-            catch (Exception ex)
-            {
-                if (ex is DeviceException || ex is OverflowException)
-                {
-                    MessageBox.Show("Failed to update Velocity and Acceleration.\nRead manual for valid values.");
-                }
-                else if (ex is InvalidOperationException)
-                {
-                    MessageBox.Show("Invalid Operation.");
-                }
-                else if (ex is FormatException)
-                {
-                    MessageBox.Show("Invalid formating.");
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-
-
-
-        /// <summary>
-        /// Shows Error Message
-        /// </summary>
-        private void ShowMessageBox(string text, uint errorCode)
-        {
-            string msg;
-
-            msg = String.Format("{0}\nErrorCode: {1:X8}", text, errorCode);
-            MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private void Motor1_status()
-        {
-            //DEBUG COMPANION
-            Invoke(new Action(() => Console.Text = errorCode.ToString()));
-            //TODO FIX MOTOR STATUS
-
-            if (errorCode == 0)
-            {
+                motor1.initializeNewMotorController(1);
                 Motor1_Status.BackColor = Color.Green;
                 Motor1_Status.Text = "";
-
                 bt_Start_Logging.Enabled = true;
                 bt_Motor1_Save_Setting.Enabled = true;
             }
-            else
+            catch (Exception e)
             {
                 Motor1_Status.BackColor = Color.Red;
-                Motor1_Status.Text = errorCode.ToString();
+                Motor1_Status.Text = motor1.errorCode.ToString();
+                MessageBox.Show(e.Message);
+            }
+        }
+        /// <summary>
+        /// Setup Motor2.
+        /// </summary>
+        private void bt_Motor2_Setup_Click(object sender, EventArgs ea)
+        {
+            try
+            {
+                motor2.initializeNewMotorController(1);//TODO Find out why all needs to be 1
+                Motor2_Status.BackColor = Color.Green;
+                Motor2_Status.Text = "";
+                bt_Start_Logging.Enabled = true;
+                bt_Motor2_Save_Setting.Enabled = true;
+            }
+            catch (Exception e)
+            {
+                Motor2_Status.BackColor = Color.Red;
+                Motor2_Status.Text = motor2.errorCode.ToString();
+                MessageBox.Show(e.Message);
+            }
+        }
+        /// <summary>
+        /// Setup Motor3.
+        /// </summary>
+        private void bt_Motor3_Setup_Click(object sender, EventArgs ea)
+        {
+            try
+            {
+                motor3.initializeNewMotorController(1);
+                Motor3_Status.BackColor = Color.Green;
+                Motor3_Status.Text = "";
+                bt_Start_Logging.Enabled = true;
+                bt_Motor3_Save_Setting.Enabled = true;
+            }
+            catch (Exception e)
+            {
+                Motor3_Status.BackColor = Color.Red;
+                Motor3_Status.Text = motor3.errorCode.ToString();
+                MessageBox.Show(e.Message);
             }
         }
 
-        private void Interfacer_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Set Motor1 Velocity and Acceleration.
+        /// </summary>
+        private void bt_Motor1_Save_Setting_Click(object sender, EventArgs e)
         {
-
+            motor1.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor1_Velocity.Text), UInt32.Parse(Motor1_Acceleration.Text));
         }
+        /// <summary>
+        /// Set Motor2 Velocity and Acceleration.
+        /// </summary>
+        private void bt_Motor2_Save_Setting_Click(object sender, EventArgs e)
+        {
+            motor2.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor2_Velocity.Text), UInt32.Parse(Motor2_Acceleration.Text));
+        }
+        /// <summary>
+        /// Set Motor3 Velocity and Acceleration.
+        /// </summary>
+        private void bt_Motor3_Save_Setting_Click(object sender, EventArgs e)
+        {
+            motor3.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor3_Velocity.Text), UInt32.Parse(Motor3_Acceleration.Text));
+        }
+
+
 
 
     }

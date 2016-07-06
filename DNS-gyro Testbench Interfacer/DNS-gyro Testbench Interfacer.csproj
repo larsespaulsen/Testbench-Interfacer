@@ -61,6 +61,7 @@
       <DependentUpon>DNS-gyroTestbenchInterfacer.cs</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
+    <Compile Include="MotorController.cs" />
     <Compile Include="Parser.cs">
       <SubType>Form</SubType>
     </Compile>
