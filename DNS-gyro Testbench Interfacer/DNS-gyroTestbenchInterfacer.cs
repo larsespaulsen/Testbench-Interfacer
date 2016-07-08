@@ -24,14 +24,7 @@ namespace DNS_gyro_Testbench_Interfacer
     public partial class Interfacer : Form
     {
         int findCarrierTarget;
-
-
-        //Motor Controller
-        //private StateMachine sm;
-        //private DeviceManager _mConnector;
-        //private Device _mEpos;
-        //private ProfilePositionMode ppm;
-        //private uint errorCode;
+        
         MotorController motor1 = new MotorController();
         MotorController motor2 = new MotorController();
         MotorController motor3 = new MotorController();
@@ -83,15 +76,18 @@ namespace DNS_gyro_Testbench_Interfacer
                 + "\nHandshake: " + _serialPort.Handshake;
         }
 
-        private void update_Console(object sender, EventArgs e)
-        {
-            if (_continue) {  }
-        }
-
         private void bt_send_Click(object sender, EventArgs e)
         {
             Console.Clear();
             serial_Write(sendMessage.Text);
+        }
+
+        private void sendMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                bt_send_Click(this, e);
+            }
         }
 
         delegate void SetTextCallback(string text);
@@ -141,88 +137,95 @@ namespace DNS_gyro_Testbench_Interfacer
         private void CarrierList_SelectedIndexChanged(object sender, EventArgs e)
         {
             Invoke(new Action(() => bt_Set_Carrier.Enabled = true));
-            string selected = CarrierList.GetItemText(CarrierList.SelectedItem);
 
-            //DEBUGG BUDDY
-            //Invoke(new Action(() => Console.Text = InitializedCarriers.ToString()));
 
-            for (int i = 0; i < InitializedCarriers; i++)
+            try
             {
-                try
+                if (Carriers[CarrierList.SelectedIndex].found)
                 {
-                    if (Carriers[i].found)
-                    {
-                        if (Carriers[i].Carrier_serial_number.Substring(0, 4) == selected.Substring(0, 4))
-                        {
-                            Carrier_serial_number.Text = Carriers[i].Carrier_serial_number;
-                            Sensor_1_name.Text = Carriers[i].Sensor_1_name;
-                            Sensor_2_name.Text = Carriers[i].Sensor_2_name;
-                            Sensor_1_active_sensors.Text = Carriers[i].Sensor_1_active_sensors.ToString();
-                            Sensor_1_installed_bitmap.Text = Carriers[i].Sensor_1_installed_bitmap.ToString();
-                            Sensor_1_enabled_bitmap.Text = Carriers[i].Sensor_1_enabled_bitmap.ToString();
-                            Sensor_1_faulty_bitmap.Text = Carriers[i].Sensor_1_faulty_bitmap.ToString();
-                            Sensor_2_active_sensors.Text = Carriers[i].Sensor_2_active_sensors.ToString();
-                            Sensor_2_installed_bitmap.Text = Carriers[i].Sensor_2_installed_bitmap.ToString();
-                            Sensor_2_enabled_bitmap.Text = Carriers[i].Sensor_2_enabled_bitmap.ToString();
-                            Sensor_2_failty_bitmap.Text = Carriers[i].Sensor_2_failty_bitmap.ToString();
-                            Encoder_offset.Text = Carriers[i].Encoder_offset.ToString();
-                            Sensor_1_Raw_data_format.Text = Carriers[i].Sensor_1_Raw_data_format.ToString();
-                            Sensor_2_Raw_data_format.Text = Carriers[i].Sensor_2_Raw_data_format.ToString();
-                            Sensor_1_Sample_rate.Text = Carriers[i].Sensor_1_Sample_rate.ToString();
-                            Sensor_1_Scale_factor_X.Text = Carriers[i].Sensor_1_Scale_factor_X.ToString();
-                            Sensor_1_Scale_factor_Y.Text = Carriers[i].Sensor_1_Scale_factor_Y.ToString();
-                            Sensor_1_Scale_factor_Z.Text = Carriers[i].Sensor_1_Scale_factor_Z.ToString();
-                            Sensor_1_SF_Tempco_X.Text = Carriers[i].Sensor_1_SF_Tempco_X.ToString();
-                            Sensor_1_SF_Tempco_Y.Text = Carriers[i].Sensor_1_SF_Tempco_Y.ToString();
-                            Sensor_1_SF_Tempco_Z.Text = Carriers[i].Sensor_1_SF_Tempco_Z.ToString();
-                            Sensor_1_Offset_X.Text = Carriers[i].Sensor_1_Offset_X.ToString();
-                            Sensor_1_Offset_Y.Text = Carriers[i].Sensor_1_Offset_Y.ToString();
-                            Sensor_1_Offset_Z.Text = Carriers[i].Sensor_1_Offset_Z.ToString();
-                            Sensor_1_Offset_Tempco_X.Text = Carriers[i].Sensor_1_Offset_Tempco_X.ToString();
-                            Sensor_1_Offset_Tempco_Y.Text = Carriers[i].Sensor_1_Offset_Tempco_Y.ToString();
-                            Sensor_1_Offset_Tempco_Z.Text = Carriers[i].Sensor_1_Offset_Tempco_Z.ToString();
-                            Sensor_1_Misalign_Alpha.Text = Carriers[i].Sensor_1_Misalign_Alpha.ToString();
-                            Sensor_1_Misalign_Beta.Text = Carriers[i].Sensor_1_Misalign_Beta.ToString();
-                            Sensor_1_Misalign_Gamma.Text = Carriers[i].Sensor_1_Misalign_Gamma.ToString();
-                            Sensor_2_Sample_rate.Text = Carriers[i].Sensor_2_Sample_rate.ToString();
-                            Sensor_2_Scale_factor_X.Text = Carriers[i].Sensor_2_Scale_factor_X.ToString();
-                            Sensor_2_Scale_factor_Y.Text = Carriers[i].Sensor_2_Scale_factor_Y.ToString();
-                            Sensor_2_Scale_factor_Z.Text = Carriers[i].Sensor_2_Scale_factor_Z.ToString();
-                            Sensor_2_SF_Tempco_X.Text = Carriers[i].Sensor_2_SF_Tempco_X.ToString();
-                            Sensor_2_SF_Tempco_Y.Text = Carriers[i].Sensor_2_SF_Tempco_Y.ToString();
-                            Sensor_2_SF_Tempco_Z.Text = Carriers[i].Sensor_2_SF_Tempco_Z.ToString();
-                            Sensor_2_Offset_X.Text = Carriers[i].Sensor_2_Offset_X.ToString();
-                            Sensor_2_Offset_Y.Text = Carriers[i].Sensor_2_Offset_Y.ToString();
-                            Sensor_2_Offset_Z.Text = Carriers[i].Sensor_2_Offset_Z.ToString();
-                            Sensor_2_Offset_Tempco_X.Text = Carriers[i].Sensor_2_Offset_Tempco_X.ToString();
-                            Sensor_2_Offset_Tempco_Y.Text = Carriers[i].Sensor_2_Offset_Tempco_Y.ToString();
-                            Sensor_2_Offset_Tempco_Z.Text = Carriers[i].Sensor_2_Offset_Tempco_Z.ToString();
-                            Sensor_2_Misalign_Alpha.Text = Carriers[i].Sensor_2_Misalign_Alpha.ToString();
-                            Sensor_2_Misalign_Beta.Text = Carriers[i].Sensor_2_Misalign_Beta.ToString();
-                            Sensor_2_Misalign_Gamma.Text = Carriers[i].Sensor_2_Misalign_Gamma.ToString();
-                            Temperature_offset.Text = Carriers[i].Temperature_offset.ToString();
-                            Temperature_scale_factor.Text = Carriers[i].Temperature_scale_factor.ToString();
-                            cb_Logg_Enabled.Checked = Carriers[i].Logg_Active;
 
-                            CurrentCarrier = i;
-                        }
-                    }
+                    CurrentCarrier = CarrierList.SelectedIndex;
+                    Invoke(new Action(() => Console.Text = Carriers[0].Carrier_serial_number + Carriers[2].Carrier_serial_number + "    " + InitializedCarriers.ToString()));
+                    Carrier_serial_number.Text = Carriers[CarrierList.SelectedIndex].Carrier_serial_number;
+                    Sensor_1_name.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_name;
+                    Sensor_2_name.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_name;
+                    Sensor_1_active_sensors.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_active_sensors.ToString();
+                    Sensor_1_installed_bitmap.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_installed_bitmap.ToString();
+                    Sensor_1_enabled_bitmap.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_enabled_bitmap.ToString();
+                    Sensor_1_faulty_bitmap.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_faulty_bitmap.ToString();
+                    Sensor_2_active_sensors.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_active_sensors.ToString();
+                    Sensor_2_installed_bitmap.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_installed_bitmap.ToString();
+                    Sensor_2_enabled_bitmap.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_enabled_bitmap.ToString();
+                    Sensor_2_failty_bitmap.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_failty_bitmap.ToString();
+                    Encoder_offset.Text = Carriers[CarrierList.SelectedIndex].Encoder_offset.ToString();
+                    Sensor_1_Raw_data_format.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Raw_data_format.ToString();
+                    Sensor_2_Raw_data_format.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Raw_data_format.ToString();
+                    Sensor_1_Sample_rate.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Sample_rate.ToString();
+                    Sensor_1_Scale_factor_X.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Scale_factor_X.ToString();
+                    Sensor_1_Scale_factor_Y.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Scale_factor_Y.ToString();
+                    Sensor_1_Scale_factor_Z.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Scale_factor_Z.ToString();
+                    Sensor_1_SF_Tempco_X.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_SF_Tempco_X.ToString();
+                    Sensor_1_SF_Tempco_Y.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_SF_Tempco_Y.ToString();
+                    Sensor_1_SF_Tempco_Z.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_SF_Tempco_Z.ToString();
+                    Sensor_1_Offset_X.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Offset_X.ToString();
+                    Sensor_1_Offset_Y.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Offset_Y.ToString();
+                    Sensor_1_Offset_Z.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Offset_Z.ToString();
+                    Sensor_1_Offset_Tempco_X.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Offset_Tempco_X.ToString();
+                    Sensor_1_Offset_Tempco_Y.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Offset_Tempco_Y.ToString();
+                    Sensor_1_Offset_Tempco_Z.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Offset_Tempco_Z.ToString();
+                    Sensor_1_Misalign_Alpha.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Misalign_Alpha.ToString();
+                    Sensor_1_Misalign_Beta.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Misalign_Beta.ToString();
+                    Sensor_1_Misalign_Gamma.Text = Carriers[CarrierList.SelectedIndex].Sensor_1_Misalign_Gamma.ToString();
+                    Sensor_2_Sample_rate.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Sample_rate.ToString();
+                    Sensor_2_Scale_factor_X.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Scale_factor_X.ToString();
+                    Sensor_2_Scale_factor_Y.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Scale_factor_Y.ToString();
+                    Sensor_2_Scale_factor_Z.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Scale_factor_Z.ToString();
+                    Sensor_2_SF_Tempco_X.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_SF_Tempco_X.ToString();
+                    Sensor_2_SF_Tempco_Y.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_SF_Tempco_Y.ToString();
+                    Sensor_2_SF_Tempco_Z.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_SF_Tempco_Z.ToString();
+                    Sensor_2_Offset_X.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Offset_X.ToString();
+                    Sensor_2_Offset_Y.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Offset_Y.ToString();
+                    Sensor_2_Offset_Z.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Offset_Z.ToString();
+                    Sensor_2_Offset_Tempco_X.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Offset_Tempco_X.ToString();
+                    Sensor_2_Offset_Tempco_Y.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Offset_Tempco_Y.ToString();
+                    Sensor_2_Offset_Tempco_Z.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Offset_Tempco_Z.ToString();
+                    Sensor_2_Misalign_Alpha.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Misalign_Alpha.ToString();
+                    Sensor_2_Misalign_Beta.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Misalign_Beta.ToString();
+                    Sensor_2_Misalign_Gamma.Text = Carriers[CarrierList.SelectedIndex].Sensor_2_Misalign_Gamma.ToString();
+                    Temperature_offset.Text = Carriers[CarrierList.SelectedIndex].Temperature_offset.ToString();
+                    Temperature_scale_factor.Text = Carriers[CarrierList.SelectedIndex].Temperature_scale_factor.ToString();
+                    cb_Logg_Enabled.Checked = Carriers[CarrierList.SelectedIndex].Logg_Active;
+
                 }
-                catch (Exception ex)
+                else
                 {
-                    if (ex is ArgumentOutOfRangeException)
+                    if (CarrierList.SelectedIndex < 14)// TODO WHY 14???
                     {
-                        MessageBox.Show("Argument is out of range");
-                    }
-                    else if (ex is FormatException)
-                    {
-                        MessageBox.Show("Format Exception");
+                        CarrierList.SelectedIndex++;
                     }
                     else
                     {
-                        MessageBox.Show(ex.ToString());
+                        CarrierList.SelectedIndex = 0;
                     }
+                    Invoke(new Action(() => CarrierList_SelectedIndexChanged(this, e)));
                 }
+            }
+
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    MessageBox.Show("Argument is out of range");
+                }
+                else if (ex is FormatException)
+                {
+                    MessageBox.Show("Format Exception");
+                }
+                else
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            
             }
             
         }
@@ -242,50 +245,50 @@ namespace DNS_gyro_Testbench_Interfacer
                 + string_bitmap_to_string_int(Carriers[CurrentCarrier].Sensor_2_installed_bitmap) + ","
                 + string_bitmap_to_string_int(Carriers[CurrentCarrier].Sensor_2_enabled_bitmap) + ","
                 + string_bitmap_to_string_int(Carriers[CurrentCarrier].Sensor_2_failty_bitmap) + ","
-                + Carriers[CurrentCarrier].Encoder_offset + ","
-                + Carriers[CurrentCarrier].Sensor_1_Raw_data_format + ","
-                + Carriers[CurrentCarrier].Sensor_2_Raw_data_format + ","
-                + Carriers[CurrentCarrier].Sensor_1_Sample_rate + ","
-                + Carriers[CurrentCarrier].Sensor_1_Scale_factor_X + ","
-                + Carriers[CurrentCarrier].Sensor_1_Scale_factor_Y + ","
-                + Carriers[CurrentCarrier].Sensor_1_Scale_factor_Z + ","
-                + Carriers[CurrentCarrier].Sensor_1_SF_Tempco_X + ","
-                + Carriers[CurrentCarrier].Sensor_1_SF_Tempco_Y + ","
-                + Carriers[CurrentCarrier].Sensor_1_SF_Tempco_Z + ","
-                + Carriers[CurrentCarrier].Sensor_1_Offset_X + ","
-                + Carriers[CurrentCarrier].Sensor_1_Offset_Y + ","
-                + Carriers[CurrentCarrier].Sensor_1_Offset_Z + ","
-                + Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_X + ","
-                + Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_Y + ","
-                + Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_Z + ","
-                + Carriers[CurrentCarrier].Sensor_1_Misalign_Alpha + ","
-                + Carriers[CurrentCarrier].Sensor_1_Misalign_Beta + ","
-                + Carriers[CurrentCarrier].Sensor_1_Misalign_Gamma + ","
-                + Carriers[CurrentCarrier].Sensor_2_Sample_rate + ","
-                + Carriers[CurrentCarrier].Sensor_2_Scale_factor_X + ","
-                + Carriers[CurrentCarrier].Sensor_2_Scale_factor_Y + ","
-                + Carriers[CurrentCarrier].Sensor_2_Scale_factor_Z + ","
-                + Carriers[CurrentCarrier].Sensor_2_SF_Tempco_X + ","
-                + Carriers[CurrentCarrier].Sensor_2_SF_Tempco_Y + ","
-                + Carriers[CurrentCarrier].Sensor_2_SF_Tempco_Z + ","
-                + Carriers[CurrentCarrier].Sensor_2_Offset_X + ","
-                + Carriers[CurrentCarrier].Sensor_2_Offset_Y + ","
-                + Carriers[CurrentCarrier].Sensor_2_Offset_Z + ","
-                + Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_X + ","
-                + Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_Y + ","
-                + Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_Z + ","
-                + Carriers[CurrentCarrier].Sensor_2_Misalign_Alpha + ","
-                + Carriers[CurrentCarrier].Sensor_2_Misalign_Beta + ","
-                + Carriers[CurrentCarrier].Sensor_2_Misalign_Gamma;
+                + NaNtoUndefined(Carriers[CurrentCarrier].Encoder_offset.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Raw_data_format.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Raw_data_format.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Sample_rate.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Scale_factor_X.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Scale_factor_Y.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Scale_factor_Z.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_SF_Tempco_X.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_SF_Tempco_Y.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_SF_Tempco_Z.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Offset_X.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Offset_Y.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Offset_Z.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_X.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_Y.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_Z.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Misalign_Alpha.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Misalign_Beta.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_1_Misalign_Gamma.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Sample_rate.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Scale_factor_X.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Scale_factor_Y.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Scale_factor_Z.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_SF_Tempco_X.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_SF_Tempco_Y.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_SF_Tempco_Z.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Offset_X.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Offset_Y.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Offset_Z.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_X.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_Y.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_Z.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Misalign_Alpha.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Misalign_Beta.ToString())
+                + NaNtoUndefined(Carriers[CurrentCarrier].Sensor_2_Misalign_Gamma.ToString());
 
 
-            /*               
-            + Carriers[CurrentCarrier].Temperature offset;
-            + Carriers[CurrentCarrier].Temperature scale factor;
-            */
+                /*               
+                + Carriers[CurrentCarrier].Temperature offset;
+                + Carriers[CurrentCarrier].Temperature scale factor;
+                */
 
 
-            serial_Write(carrierSettings);
+                serial_Write(carrierSettings);
             }
             catch (Exception ex)
             {
@@ -311,8 +314,22 @@ namespace DNS_gyro_Testbench_Interfacer
 
         }
 
+        private string NaNtoUndefined(string txt)
+        {
+            if(txt == "NaN")
+            {
+                return ",";
+            }
+            else
+            {
+                return txt + ",";
+            }
+        }
+
         private void Find_Carriers(object sender, DoWorkEventArgs e)
         {
+            Invoke(new Action(() => CarrierList.Items.Clear()));
+            Invoke(new Action(() => InitializedCarriers = 0));
             Invoke(new Action(() => CarrierList.Enabled = false));
             if (_continue) {
                 Invoke(new Action(() => bt_Reload_Carrier_List.Enabled = false));
@@ -345,12 +362,13 @@ namespace DNS_gyro_Testbench_Interfacer
                 }
                 else
                 {
-                    //throw;
+                    throw;
                 }
             }
             Invoke(new Action(() => CarrierList_SelectedIndexChanged(this, e)));
             Invoke(new Action(() => CarrierList.Enabled = true));
             Invoke(new Action(() => bt_Reload_Carrier_List.Enabled = true));
+            Invoke(new Action(() => bt_Start_Logging.Enabled = true));
         }
 
         private void bt_Reload_Carrier_List_Click_1(object sender, EventArgs e)//REDUNDANT?
@@ -389,199 +407,395 @@ namespace DNS_gyro_Testbench_Interfacer
         #region Sensor Parameter inputs
         private void Carrier_serial_number_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Carrier_serial_number = Carrier_serial_number.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Carrier_serial_number = Carrier_serial_number.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_name_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_name = Sensor_1_name.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_name = Sensor_1_name.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_name_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_name = Sensor_2_name.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_name = Sensor_2_name.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_active_sensors_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_active_sensors = Sensor_1_active_sensors.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_active_sensors = Sensor_1_active_sensors.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_installed_bitmap_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_installed_bitmap = Sensor_1_installed_bitmap.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_installed_bitmap = Sensor_1_installed_bitmap.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_enabled_bitmap_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_enabled_bitmap = Sensor_1_enabled_bitmap.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_enabled_bitmap = Sensor_1_enabled_bitmap.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_faulty_bitmap_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_faulty_bitmap = Sensor_1_faulty_bitmap.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_faulty_bitmap = Sensor_1_faulty_bitmap.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_active_sensors_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_active_sensors = Sensor_2_active_sensors.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_active_sensors = Sensor_2_active_sensors.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_installed_bitmap_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_installed_bitmap = Sensor_2_installed_bitmap.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_installed_bitmap = Sensor_2_installed_bitmap.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_enabled_bitmap_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_enabled_bitmap = Sensor_2_enabled_bitmap.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_enabled_bitmap = Sensor_2_enabled_bitmap.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_failty_bitmap_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_failty_bitmap = Sensor_2_failty_bitmap.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_failty_bitmap = Sensor_2_failty_bitmap.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Encoder_offset_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Encoder_offset = Encoder_offset.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Encoder_offset = Encoder_offset.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Raw_data_format_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Raw_data_format = Sensor_1_Raw_data_format.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Raw_data_format = Sensor_1_Raw_data_format.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Raw_data_format_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Raw_data_format = Sensor_2_Raw_data_format.Text;
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Raw_data_format = Sensor_2_Raw_data_format.Text;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Sample_rate_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Sample_rate = float.Parse(Sensor_1_Sample_rate.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Sample_rate = float.Parse(Sensor_1_Sample_rate.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Scale_factor_X_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Scale_factor_X = float.Parse(Sensor_1_Scale_factor_X.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Scale_factor_X = float.Parse(Sensor_1_Scale_factor_X.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Scale_factor_Y_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Scale_factor_Y = float.Parse(Sensor_1_Scale_factor_Y.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Scale_factor_Y = float.Parse(Sensor_1_Scale_factor_Y.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Scale_factor_Z_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Scale_factor_Z = float.Parse(Sensor_1_Scale_factor_Z.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Scale_factor_Z = float.Parse(Sensor_1_Scale_factor_Z.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_SF_Tempco_X_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_SF_Tempco_X = float.Parse(Sensor_1_SF_Tempco_X.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_SF_Tempco_X = float.Parse(Sensor_1_SF_Tempco_X.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_SF_Tempco_Y_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_SF_Tempco_Y = float.Parse(Sensor_1_SF_Tempco_Y.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_SF_Tempco_Y = float.Parse(Sensor_1_SF_Tempco_Y.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_SF_Tempco_Z_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_SF_Tempco_Z = float.Parse(Sensor_1_SF_Tempco_Z.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_SF_Tempco_Z = float.Parse(Sensor_1_SF_Tempco_Z.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Offset_X_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Offset_X = float.Parse(Sensor_1_Offset_X.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Offset_X = float.Parse(Sensor_1_Offset_X.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Offset_Y_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Offset_Y = float.Parse(Sensor_1_Offset_Y.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Offset_Y = float.Parse(Sensor_1_Offset_Y.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Offset_Z_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Offset_Z = float.Parse(Sensor_1_Offset_Z.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Offset_Z = float.Parse(Sensor_1_Offset_Z.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Offset_Tempco_X_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_X = float.Parse(Sensor_1_Offset_Tempco_X.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_X = float.Parse(Sensor_1_Offset_Tempco_X.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Offset_Tempco_Y_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_Y = float.Parse(Sensor_1_Offset_Tempco_Y.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_Y = float.Parse(Sensor_1_Offset_Tempco_Y.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Offset_Tempco_Z_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_Z = float.Parse(Sensor_1_Offset_Tempco_Z.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Offset_Tempco_Z = float.Parse(Sensor_1_Offset_Tempco_Z.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Misalign_Alpha_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Misalign_Alpha = float.Parse(Sensor_1_Misalign_Alpha.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Misalign_Alpha = float.Parse(Sensor_1_Misalign_Alpha.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Misalign_Beta_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Misalign_Beta = float.Parse(Sensor_1_Misalign_Beta.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Misalign_Beta = float.Parse(Sensor_1_Misalign_Beta.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_1_Misalign_Gamma_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_1_Misalign_Gamma = float.Parse(Sensor_1_Misalign_Gamma.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_1_Misalign_Gamma = float.Parse(Sensor_1_Misalign_Gamma.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Sample_rate_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Sample_rate = float.Parse(Sensor_2_Sample_rate.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Sample_rate = float.Parse(Sensor_2_Sample_rate.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Scale_factor_X_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Scale_factor_X = float.Parse(Sensor_2_Scale_factor_X.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Scale_factor_X = float.Parse(Sensor_2_Scale_factor_X.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Scale_factor_Y_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Scale_factor_Y = float.Parse(Sensor_2_Scale_factor_Y.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Scale_factor_Y = float.Parse(Sensor_2_Scale_factor_Y.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Scale_factor_Z_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Scale_factor_Z = float.Parse(Sensor_2_Scale_factor_Z.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Scale_factor_Z = float.Parse(Sensor_2_Scale_factor_Z.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_SF_Tempco_X_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_SF_Tempco_X = float.Parse(Sensor_2_SF_Tempco_X.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_SF_Tempco_X = float.Parse(Sensor_2_SF_Tempco_X.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_SF_Tempco_Y_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_SF_Tempco_Y = float.Parse(Sensor_2_SF_Tempco_Y.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_SF_Tempco_Y = float.Parse(Sensor_2_SF_Tempco_Y.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_SF_Tempco_Z_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_SF_Tempco_Z = float.Parse(Sensor_2_SF_Tempco_Z.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_SF_Tempco_Z = float.Parse(Sensor_2_SF_Tempco_Z.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Offset_X_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Offset_X = float.Parse(Sensor_2_Offset_X.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Offset_X = float.Parse(Sensor_2_Offset_X.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Offset_Y_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Offset_Y = float.Parse(Sensor_2_Offset_Y.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Offset_Y = float.Parse(Sensor_2_Offset_Y.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Offset_Z_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Offset_Z = float.Parse(Sensor_2_Offset_Z.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Offset_Z = float.Parse(Sensor_2_Offset_Z.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Offset_Tempco_X_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_X = float.Parse(Sensor_2_Offset_Tempco_X.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_X = float.Parse(Sensor_2_Offset_Tempco_X.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Offset_Tempco_Y_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_Y = float.Parse(Sensor_2_Offset_Tempco_Y.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_Y = float.Parse(Sensor_2_Offset_Tempco_Y.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Offset_Tempco_Z_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_Z = float.Parse(Sensor_2_Offset_Tempco_Z.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Offset_Tempco_Z = float.Parse(Sensor_2_Offset_Tempco_Z.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Misalign_Alpha_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Misalign_Alpha = float.Parse(Sensor_2_Misalign_Alpha.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Misalign_Alpha = float.Parse(Sensor_2_Misalign_Alpha.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Misalign_Beta_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Misalign_Beta = float.Parse(Sensor_2_Misalign_Beta.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Misalign_Beta = float.Parse(Sensor_2_Misalign_Beta.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Sensor_2_Misalign_Gamma_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Sensor_2_Misalign_Gamma = float.Parse(Sensor_2_Misalign_Gamma.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Sensor_2_Misalign_Gamma = float.Parse(Sensor_2_Misalign_Gamma.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Temperature_offset_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Temperature_offset = float.Parse(Temperature_offset.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Temperature_offset = float.Parse(Temperature_offset.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void Temperature_scale_factor_TextChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Temperature_scale_factor = float.Parse(Temperature_scale_factor.Text);
+            try
+            {
+                Carriers[CurrentCarrier].Temperature_scale_factor = float.Parse(Temperature_scale_factor.Text);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         private void cb_Logg_Enabled_CheckedChanged(object sender, EventArgs e)
         {
-            Carriers[CurrentCarrier].Logg_Active = cb_Logg_Enabled.Checked;
+            try
+            {
+                Carriers[CurrentCarrier].Logg_Active = cb_Logg_Enabled.Checked;
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
         #endregion
 
@@ -604,7 +818,6 @@ namespace DNS_gyro_Testbench_Interfacer
             CancelLogging = false;
             
             //Create loggfiles for enabled addresses
-            int Addr;
             for (int i = 0; i < 16; i++)
             {
                 try
@@ -730,15 +943,23 @@ namespace DNS_gyro_Testbench_Interfacer
 
             if (ToggleBool)
             {
-                motor1.absoluteMoveTo(12);
-                motor2.absoluteMoveTo(12);
+                if (cb_Motor1_Enabled.Checked)
+                    motor1.absoluteMoveTo(12);
+                if(cb_Motor2_Enabled.Checked)
+                    motor2.absoluteMoveTo(12);
+                if (cb_Motor3_Enabled.Checked)
+                    motor3.absoluteMoveTo(12);
 
                 ToggleBool = false;
             }
             else
             {
-                motor1.absoluteMoveTo(0);
-                motor2.absoluteMoveTo(0);
+                if (cb_Motor1_Enabled.Checked)
+                    motor1.absoluteMoveTo(0);
+                if (cb_Motor2_Enabled.Checked)
+                    motor2.absoluteMoveTo(0);
+                if (cb_Motor3_Enabled.Checked)
+                    motor3.absoluteMoveTo(0);
                 ToggleBool = true;
             }
             Thread.Sleep(1);
@@ -766,16 +987,10 @@ namespace DNS_gyro_Testbench_Interfacer
         {
             try
             {
-                motor1.initializeNewMotorController(1);
-                Motor1_Status.BackColor = Color.Green;
-                Motor1_Status.Text = "";
-                bt_Start_Logging.Enabled = true;
-                bt_Motor1_Save_Setting.Enabled = true;
+                cb_Motor1_Enabled.Checked = motor1.initializeNewMotorController(1);
             }
             catch (Exception e)
             {
-                Motor1_Status.BackColor = Color.Red;
-                Motor1_Status.Text = motor1.errorCode.ToString();
                 MessageBox.Show(e.Message);
             }
         }
@@ -786,16 +1001,10 @@ namespace DNS_gyro_Testbench_Interfacer
         {
             try
             {
-                motor2.initializeNewMotorController(1);//TODO Find out why all needs to be 1
-                Motor2_Status.BackColor = Color.Green;
-                Motor2_Status.Text = "";
-                bt_Start_Logging.Enabled = true;
-                bt_Motor2_Save_Setting.Enabled = true;
+                cb_Motor2_Enabled.Checked = motor2.initializeNewMotorController(1);//TODO Find out why all needs to be 1
             }
             catch (Exception e)
             {
-                Motor2_Status.BackColor = Color.Red;
-                Motor2_Status.Text = motor2.errorCode.ToString();
                 MessageBox.Show(e.Message);
             }
         }
@@ -806,16 +1015,10 @@ namespace DNS_gyro_Testbench_Interfacer
         {
             try
             {
-                motor3.initializeNewMotorController(1);
-                Motor3_Status.BackColor = Color.Green;
-                Motor3_Status.Text = "";
-                bt_Start_Logging.Enabled = true;
-                bt_Motor3_Save_Setting.Enabled = true;
+                cb_Motor3_Enabled.Checked = motor3.initializeNewMotorController(1);
             }
             catch (Exception e)
             {
-                Motor3_Status.BackColor = Color.Red;
-                Motor3_Status.Text = motor3.errorCode.ToString();
                 MessageBox.Show(e.Message);
             }
         }
@@ -842,9 +1045,122 @@ namespace DNS_gyro_Testbench_Interfacer
             motor3.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor3_Velocity.Text), UInt32.Parse(Motor3_Acceleration.Text));
         }
 
+        private void cb_Motor1_Enabled_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_Motor1_Enabled.Checked)
+            {
+                try
+                {
+                    bt_Motor1_Setup_Click(this, e);
+                    if (cb_Motor1_Enabled.Checked)
+                    {
+                        bt_Motor1_Save_Setting.Enabled = true;
+                        bt_Motor1_Setup.Enabled = true;
+                        Motor1_Acceleration.Enabled = true;
+                        Motor1_Status.Enabled = true;
+                        Motor1_Velocity.Enabled = true;
 
+                        Motor1_Status.BackColor = Color.Green;
+                        Motor1_Status.Text = "";
+                        bt_Start_Logging.Enabled = true;
+                        bt_Motor1_Save_Setting.Enabled = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                bt_Motor1_Save_Setting.Enabled = false;
+                bt_Motor1_Setup.Enabled = false;
+                Motor1_Acceleration.Enabled = false;
+                Motor1_Status.Enabled = false;
+                Motor1_Velocity.Enabled = false;
+                
+                Motor1_Status.BackColor = Color.Red;
+                //Motor1_Status.Text = motor1.errorCode.ToString();
+            }
+        }
 
+        private void cb_Motor2_Enabled_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_Motor2_Enabled.Checked)
+            {
+                try
+                {
+                    bt_Motor2_Setup_Click(this, e);
+                    if (cb_Motor2_Enabled.Checked)
+                    {
+                        bt_Motor2_Save_Setting.Enabled = true;
+                        bt_Motor2_Setup.Enabled = true;
+                        Motor2_Acceleration.Enabled = true;
+                        Motor2_Status.Enabled = true;
+                        Motor2_Velocity.Enabled = true;
 
+                        Motor2_Status.BackColor = Color.Green;
+                        Motor2_Status.Text = "";
+                        bt_Start_Logging.Enabled = true;
+                        bt_Motor2_Save_Setting.Enabled = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                bt_Motor2_Save_Setting.Enabled = false;
+                bt_Motor2_Setup.Enabled = false;
+                Motor2_Acceleration.Enabled = false;
+                Motor2_Status.Enabled = false;
+                Motor2_Velocity.Enabled = false;
+
+                Motor2_Status.BackColor = Color.Red;
+                //Motor2_Status.Text = motor2.errorCode.ToString();
+            }
+        }
+
+        private void cb_Motor3_Enabled_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_Motor3_Enabled.Checked)
+            {
+                try
+                {
+                    bt_Motor3_Setup_Click(this, e);
+                    if (cb_Motor3_Enabled.Checked)
+                    {
+                        bt_Motor3_Save_Setting.Enabled = true;
+                        bt_Motor3_Setup.Enabled = true;
+                        Motor3_Acceleration.Enabled = true;
+                        Motor3_Status.Enabled = true;
+                        Motor3_Velocity.Enabled = true;
+
+                        Motor3_Status.BackColor = Color.Green;
+                        Motor3_Status.Text = "";
+                        bt_Start_Logging.Enabled = true;
+                        bt_Motor3_Save_Setting.Enabled = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                bt_Motor3_Save_Setting.Enabled = false;
+                bt_Motor3_Setup.Enabled = false;
+                Motor3_Acceleration.Enabled = false;
+                Motor3_Status.Enabled = false;
+                Motor3_Velocity.Enabled = false;
+
+                Motor3_Status.BackColor = Color.Red;
+                //Motor3_Status.Text = motor3.errorCode.ToString();
+            }
+        }
     }
 
 

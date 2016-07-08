@@ -60,8 +60,8 @@ namespace DNS_gyro_Testbench_Interfacer
             switch (serialData.Substring(0, 24))
             {
                 case "Carrier I2C address     ":
-                    //Start of Initializing Carrier
-                    Carriers[InitializedCarriers] = new Carrier();
+                        //Start of Initializing Carrier
+                        Carriers[InitializedCarriers] = new Carrier();
                     Carriers[InitializedCarriers].found = true;
                     Carriers[InitializedCarriers].Logg_Active = false;
                     Carriers[InitializedCarriers].Carrier_I2C_address = serialData.Substring(27);
@@ -128,131 +128,419 @@ namespace DNS_gyro_Testbench_Interfacer
                     break;
 
                 case "Sensor 1 Sample rate    ":
-                    Carriers[InitializedCarriers].Sensor_1_Sample_rate = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Sample_rate = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Sample_rate = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 1 Scale factor X ":
-                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_X = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Scale_factor_X = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Scale_factor_X = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 1 Scale factor Y ":
-                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_Y = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Scale_factor_Y = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Scale_factor_Y = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 1 Scale factor Z ":
-                    Carriers[InitializedCarriers].Sensor_1_Scale_factor_Z = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Scale_factor_Z = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Scale_factor_Z = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 1 SF Tempco X    ":
-                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_X = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_SF_Tempco_X = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_SF_Tempco_X = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 1 SF Tempco Y    ":
-                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Y = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Y = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Y = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 1 SF Tempco Z    ":
-                    Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Z = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Z = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_SF_Tempco_Z = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 1 Offset X       ":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_X = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_X = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_X = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 1 Offset Y       ":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Y = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Y = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Y = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 1 Offset Z       ":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Z = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Z = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Z = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 1 Offset Tempco X":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_X = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_X = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_X = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 1 Offset Tempco Y":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Y = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Y = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Y = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 1 Offset Tempco Z":
-                    Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Z = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Z = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Offset_Tempco_Z = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 1 Misalign Alpha ":
-                    Carriers[InitializedCarriers].Sensor_1_Misalign_Alpha = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Misalign_Alpha = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Misalign_Alpha = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 1 Misalign Beta  ":
-                    Carriers[InitializedCarriers].Sensor_1_Misalign_Beta = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Misalign_Beta = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Misalign_Beta = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 1 Misalign Gamma ":
-                    Carriers[InitializedCarriers].Sensor_1_Misalign_Gamma = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Misalign_Gamma = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_1_Misalign_Gamma = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 Sample rate    ":
-                    Carriers[InitializedCarriers].Sensor_2_Sample_rate = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Sample_rate = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Sample_rate = float.Parse(serialData.Substring(28));
+                        }
+
                     break;
 
                 case "Sensor 2 Scale factor X ":
-                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_X = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Scale_factor_X = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Scale_factor_X = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 2 Scale factor Y ":
-                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_Y = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Scale_factor_Y = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Scale_factor_Y = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 2 Scale factor Z ":
-                    Carriers[InitializedCarriers].Sensor_2_Scale_factor_Z = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Scale_factor_Z = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Scale_factor_Z = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 SF Tempco X    ":
-                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_X = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_SF_Tempco_X = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_SF_Tempco_X = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 2 SF Tempco Y    ":
-                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Y = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Y = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Y = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 2 SF Tempco Z    ":
-                    Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Z = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Z = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_SF_Tempco_Z = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 Offset X       ":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_X = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_X = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_X = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 2 Offset Y       ":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Y = float.Parse(serialData.Substring(28));
-                    break;
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Y = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Y = float.Parse(serialData.Substring(28));
+                        }
+
+                        break;
 
                 case "Sensor 2 Offset Z       ":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Z = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Z = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Z = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 Offset Tempco X":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_X = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_X = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_X = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 Offset Tempco Y":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Y = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Y = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Y = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 Offset Tempco Z":
-                    Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Z = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Z = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Offset_Tempco_Z = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 Misalign Alpha ":
-                    Carriers[InitializedCarriers].Sensor_2_Misalign_Alpha = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Misalign_Alpha = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Misalign_Alpha = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 Misalign Beta  ":
-                    Carriers[InitializedCarriers].Sensor_2_Misalign_Beta = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Misalign_Beta = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Misalign_Beta = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Sensor 2 Misalign Gamma ":
-                    Carriers[InitializedCarriers].Sensor_2_Misalign_Gamma = float.Parse(serialData.Substring(28));
+
+                        if (serialData.Substring(27, 9).Equals("undefined"))
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Misalign_Gamma = float.NaN;
+                        }
+                        else
+                        {
+                            Carriers[InitializedCarriers].Sensor_2_Misalign_Gamma = float.Parse(serialData.Substring(28));
+                        }
+                        
                     break;
 
                 case "Temperature offset      ":
@@ -294,11 +582,14 @@ namespace DNS_gyro_Testbench_Interfacer
                     break;
 
                 case "No carrier at this I2C a":
+
+                        Invoke(new Action(() => Console.AppendText(serialData)));
                         //TODO delete carrier instances  that has disconnected
                         try
                         {
                             Carriers[InitializedCarriers] = new Carrier();
                             Carriers[InitializedCarriers].found = false;
+                            Add_Carrier_List_Item("NONE@0x"+(20+InitializedCarriers));
                             //Increment when done Initializing Carrier
                             InitializedCarriers++;
                         }

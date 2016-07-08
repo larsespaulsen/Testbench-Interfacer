@@ -205,6 +205,7 @@
             this.sendMessage.Name = "sendMessage";
             this.sendMessage.Size = new System.Drawing.Size(448, 20);
             this.sendMessage.TabIndex = 2;
+            this.sendMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.sendMessage_KeyDown);
             // 
             // ComStatus
             // 
@@ -1178,6 +1179,7 @@
             // 
             // bt_Motor1_Setup
             // 
+            this.bt_Motor1_Setup.Enabled = false;
             this.bt_Motor1_Setup.Location = new System.Drawing.Point(441, 752);
             this.bt_Motor1_Setup.Name = "bt_Motor1_Setup";
             this.bt_Motor1_Setup.Size = new System.Drawing.Size(100, 23);
@@ -1197,6 +1199,7 @@
             // 
             // Motor1_Velocity
             // 
+            this.Motor1_Velocity.Enabled = false;
             this.Motor1_Velocity.Location = new System.Drawing.Point(441, 814);
             this.Motor1_Velocity.Name = "Motor1_Velocity";
             this.Motor1_Velocity.Size = new System.Drawing.Size(100, 20);
@@ -1205,6 +1208,7 @@
             // 
             // Motor1_Acceleration
             // 
+            this.Motor1_Acceleration.Enabled = false;
             this.Motor1_Acceleration.Location = new System.Drawing.Point(441, 862);
             this.Motor1_Acceleration.Name = "Motor1_Acceleration";
             this.Motor1_Acceleration.Size = new System.Drawing.Size(100, 20);
@@ -1277,6 +1281,7 @@
             // Motor1_Status
             // 
             this.Motor1_Status.BackColor = System.Drawing.Color.Red;
+            this.Motor1_Status.Enabled = false;
             this.Motor1_Status.Location = new System.Drawing.Point(512, 729);
             this.Motor1_Status.Name = "Motor1_Status";
             this.Motor1_Status.ReadOnly = true;
@@ -1303,6 +1308,7 @@
             this.cb_Motor1_Enabled.TabIndex = 50;
             this.cb_Motor1_Enabled.Text = "Enabled";
             this.cb_Motor1_Enabled.UseVisualStyleBackColor = true;
+            this.cb_Motor1_Enabled.CheckedChanged += new System.EventHandler(this.cb_Motor1_Enabled_CheckedChanged);
             // 
             // cb_Motor2_Enabled
             // 
@@ -1313,10 +1319,12 @@
             this.cb_Motor2_Enabled.TabIndex = 59;
             this.cb_Motor2_Enabled.Text = "Enabled";
             this.cb_Motor2_Enabled.UseVisualStyleBackColor = true;
+            this.cb_Motor2_Enabled.CheckedChanged += new System.EventHandler(this.cb_Motor2_Enabled_CheckedChanged);
             // 
             // Motor2_Status
             // 
             this.Motor2_Status.BackColor = System.Drawing.Color.Red;
+            this.Motor2_Status.Enabled = false;
             this.Motor2_Status.Location = new System.Drawing.Point(684, 729);
             this.Motor2_Status.Name = "Motor2_Status";
             this.Motor2_Status.ReadOnly = true;
@@ -1354,6 +1362,7 @@
             // 
             // Motor2_Acceleration
             // 
+            this.Motor2_Acceleration.Enabled = false;
             this.Motor2_Acceleration.Location = new System.Drawing.Point(613, 862);
             this.Motor2_Acceleration.Name = "Motor2_Acceleration";
             this.Motor2_Acceleration.Size = new System.Drawing.Size(100, 20);
@@ -1362,6 +1371,7 @@
             // 
             // Motor2_Velocity
             // 
+            this.Motor2_Velocity.Enabled = false;
             this.Motor2_Velocity.Location = new System.Drawing.Point(613, 814);
             this.Motor2_Velocity.Name = "Motor2_Velocity";
             this.Motor2_Velocity.Size = new System.Drawing.Size(100, 20);
@@ -1379,6 +1389,7 @@
             // 
             // bt_Motor2_Setup
             // 
+            this.bt_Motor2_Setup.Enabled = false;
             this.bt_Motor2_Setup.Location = new System.Drawing.Point(613, 752);
             this.bt_Motor2_Setup.Name = "bt_Motor2_Setup";
             this.bt_Motor2_Setup.Size = new System.Drawing.Size(100, 23);
@@ -1396,10 +1407,12 @@
             this.cb_Motor3_Enabled.TabIndex = 68;
             this.cb_Motor3_Enabled.Text = "Enabled";
             this.cb_Motor3_Enabled.UseVisualStyleBackColor = true;
+            this.cb_Motor3_Enabled.CheckedChanged += new System.EventHandler(this.cb_Motor3_Enabled_CheckedChanged);
             // 
             // Motor3_Status
             // 
             this.Motor3_Status.BackColor = System.Drawing.Color.Red;
+            this.Motor3_Status.Enabled = false;
             this.Motor3_Status.Location = new System.Drawing.Point(849, 729);
             this.Motor3_Status.Name = "Motor3_Status";
             this.Motor3_Status.ReadOnly = true;
@@ -1437,6 +1450,7 @@
             // 
             // Motor3_Acceleration
             // 
+            this.Motor3_Acceleration.Enabled = false;
             this.Motor3_Acceleration.Location = new System.Drawing.Point(778, 862);
             this.Motor3_Acceleration.Name = "Motor3_Acceleration";
             this.Motor3_Acceleration.Size = new System.Drawing.Size(100, 20);
@@ -1445,6 +1459,7 @@
             // 
             // Motor3_Velocity
             // 
+            this.Motor3_Velocity.Enabled = false;
             this.Motor3_Velocity.Location = new System.Drawing.Point(778, 814);
             this.Motor3_Velocity.Name = "Motor3_Velocity";
             this.Motor3_Velocity.Size = new System.Drawing.Size(100, 20);
@@ -1462,6 +1477,7 @@
             // 
             // bt_Motor3_Setup
             // 
+            this.bt_Motor3_Setup.Enabled = false;
             this.bt_Motor3_Setup.Location = new System.Drawing.Point(778, 752);
             this.bt_Motor3_Setup.Name = "bt_Motor3_Setup";
             this.bt_Motor3_Setup.Size = new System.Drawing.Size(100, 23);

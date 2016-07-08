@@ -27,10 +27,8 @@ namespace DNS_gyro_Testbench_Interfacer
         private Device _mEpos;
         public uint errorCode = 0;//TODO
 
-        public void initializeNewMotorController(UInt16 DeviceNr)
-        {
-            try
-            {
+        public bool initializeNewMotorController(UInt16 DeviceNr)
+        {try{
                 if (_mConnector != null)
                 {
                     /*                    
@@ -53,10 +51,12 @@ namespace DNS_gyro_Testbench_Interfacer
             catch (DeviceException e)
             {
                 MessageBox.Show(e.Message);
+                return false;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                return false;
             }
 
             try
@@ -77,15 +77,19 @@ namespace DNS_gyro_Testbench_Interfacer
             catch (DeviceException e)
             {
                 MessageBox.Show(e.Message);
+                return false;
             }
             catch (AccessViolationException e)
             {
                 MessageBox.Show(e.Message);
+                return false;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                return false;
             }
+            return true;
         }
 
         public void setMotorControllerVelocityAndAccelleration(UInt32 velocity, UInt32 acceleration)
