@@ -40,6 +40,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\EposCmd.Net.dll</HintPath>
     </Reference>
+    <Reference Include="EposPCmd.Net, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\EposPCmd.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -61,7 +65,8 @@
       <DependentUpon>DNS-gyroTestbenchInterfacer.cs</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
-    <Compile Include="MotorController.cs" />
+    <Compile Include="MotorControllerEPOS.cs" />
+    <Compile Include="MotorControllerEPOSP.cs" />
     <Compile Include="Parser.cs">
       <SubType>Form</SubType>
     </Compile>

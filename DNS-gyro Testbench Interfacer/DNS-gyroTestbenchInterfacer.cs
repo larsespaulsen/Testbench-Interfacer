@@ -18,6 +18,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using EposCmd.Net;
 using EposCmd.Net.DeviceCmdSet.Operation;
+using EposPCmd.Net;
 
 namespace DNS_gyro_Testbench_Interfacer
 {
@@ -25,9 +26,9 @@ namespace DNS_gyro_Testbench_Interfacer
     {
         int findCarrierTarget;
         
-        MotorController motor1 = new MotorController();
-        MotorController motor2 = new MotorController();
-        MotorController motor3 = new MotorController();
+        MotorControllerEPOS motor1 = new MotorControllerEPOS();
+        MotorControllerEPOS motor2 = new MotorControllerEPOS();
+        MotorControllerEPOS motor3 = new MotorControllerEPOS();
 
 
 
@@ -944,11 +945,11 @@ namespace DNS_gyro_Testbench_Interfacer
             if (ToggleBool)
             {
                 if (cb_Motor1_Enabled.Checked)
-                    motor1.absoluteMoveTo(12);
+                    motor1.absoluteMoveTo(int.Parse(Motor1_Distance.Text));
                 if(cb_Motor2_Enabled.Checked)
-                    motor2.absoluteMoveTo(12);
+                    motor2.absoluteMoveTo(int.Parse(Motor2_Distance.Text));
                 if (cb_Motor3_Enabled.Checked)
-                    motor3.absoluteMoveTo(12);
+                    motor3.absoluteMoveToAndStop(int.Parse(Motor3_Distance.Text), UInt32.Parse(Motor3_Velocity.Text), UInt32.Parse(Motor3_Acceleration.Text), UInt32.Parse(Motor3_Deacceleration.Text));
 
                 ToggleBool = false;
             }
@@ -959,7 +960,7 @@ namespace DNS_gyro_Testbench_Interfacer
                 if (cb_Motor2_Enabled.Checked)
                     motor2.absoluteMoveTo(0);
                 if (cb_Motor3_Enabled.Checked)
-                    motor3.absoluteMoveTo(0);
+                    motor3.absoluteMoveToAndStop(0,UInt32.Parse(Motor3_Velocity.Text), UInt32.Parse(Motor3_Acceleration.Text), UInt32.Parse(Motor3_Deacceleration.Text));
                 ToggleBool = true;
             }
             Thread.Sleep(1);
@@ -1028,21 +1029,21 @@ namespace DNS_gyro_Testbench_Interfacer
         /// </summary>
         private void bt_Motor1_Save_Setting_Click(object sender, EventArgs e)
         {
-            motor1.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor1_Velocity.Text), UInt32.Parse(Motor1_Acceleration.Text));
+            motor1.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor1_Velocity.Text), UInt32.Parse(Motor1_Acceleration.Text), UInt32.Parse(Motor1_Deacceleration.Text));
         }
         /// <summary>
         /// Set Motor2 Velocity and Acceleration.
         /// </summary>
         private void bt_Motor2_Save_Setting_Click(object sender, EventArgs e)
         {
-            motor2.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor2_Velocity.Text), UInt32.Parse(Motor2_Acceleration.Text));
+            motor2.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor2_Velocity.Text), UInt32.Parse(Motor2_Acceleration.Text), UInt32.Parse(Motor2_Deacceleration.Text));
         }
         /// <summary>
         /// Set Motor3 Velocity and Acceleration.
         /// </summary>
         private void bt_Motor3_Save_Setting_Click(object sender, EventArgs e)
         {
-            motor3.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor3_Velocity.Text), UInt32.Parse(Motor3_Acceleration.Text));
+            motor3.setMotorControllerVelocityAndAccelleration(UInt32.Parse(Motor3_Velocity.Text), UInt32.Parse(Motor3_Acceleration.Text), UInt32.Parse(Motor3_Deacceleration.Text));
         }
 
         private void cb_Motor1_Enabled_CheckedChanged(object sender, EventArgs e)
@@ -1161,6 +1162,7 @@ namespace DNS_gyro_Testbench_Interfacer
                 //Motor3_Status.Text = motor3.errorCode.ToString();
             }
         }
+
     }
 
 

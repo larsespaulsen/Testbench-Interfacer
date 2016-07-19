@@ -179,6 +179,18 @@
             this.Motor3_Velocity = new System.Windows.Forms.TextBox();
             this.lb_Motor_Controller3 = new System.Windows.Forms.Label();
             this.bt_Motor3_Setup = new System.Windows.Forms.Button();
+            this.lb_Motor1_distance = new System.Windows.Forms.Label();
+            this.lb_Motor2_distance = new System.Windows.Forms.Label();
+            this.lb_Motor3_distance = new System.Windows.Forms.Label();
+            this.Motor1_Distance = new System.Windows.Forms.TextBox();
+            this.Motor2_Distance = new System.Windows.Forms.TextBox();
+            this.Motor3_Distance = new System.Windows.Forms.TextBox();
+            this.Motor1_Deacceleration = new System.Windows.Forms.TextBox();
+            this.lb_Motor1_Deacceleration = new System.Windows.Forms.Label();
+            this.lb_Motor2_Deacceleration = new System.Windows.Forms.Label();
+            this.lb_Motor3_Deacceleration = new System.Windows.Forms.Label();
+            this.Motor2_Deacceleration = new System.Windows.Forms.TextBox();
+            this.Motor3_Deacceleration = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // bt_serialConnect
@@ -259,9 +271,9 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 952);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1031);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1152, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1159, 22);
             this.statusStrip1.TabIndex = 0;
             // 
             // Console
@@ -1145,7 +1157,7 @@
             // 
             // LoggProgress
             // 
-            this.LoggProgress.Location = new System.Drawing.Point(12, 916);
+            this.LoggProgress.Location = new System.Drawing.Point(15, 969);
             this.LoggProgress.Maximum = 20;
             this.LoggProgress.Name = "LoggProgress";
             this.LoggProgress.Size = new System.Drawing.Size(945, 23);
@@ -1154,7 +1166,7 @@
             // bt_Start_Logging
             // 
             this.bt_Start_Logging.Enabled = false;
-            this.bt_Start_Logging.Location = new System.Drawing.Point(12, 887);
+            this.bt_Start_Logging.Location = new System.Drawing.Point(13, 940);
             this.bt_Start_Logging.Name = "bt_Start_Logging";
             this.bt_Start_Logging.Size = new System.Drawing.Size(143, 23);
             this.bt_Start_Logging.TabIndex = 33;
@@ -1169,7 +1181,7 @@
             // bt_Cancel_Logging
             // 
             this.bt_Cancel_Logging.Enabled = false;
-            this.bt_Cancel_Logging.Location = new System.Drawing.Point(161, 887);
+            this.bt_Cancel_Logging.Location = new System.Drawing.Point(162, 940);
             this.bt_Cancel_Logging.Name = "bt_Cancel_Logging";
             this.bt_Cancel_Logging.Size = new System.Drawing.Size(137, 23);
             this.bt_Cancel_Logging.TabIndex = 34;
@@ -1200,7 +1212,7 @@
             // Motor1_Velocity
             // 
             this.Motor1_Velocity.Enabled = false;
-            this.Motor1_Velocity.Location = new System.Drawing.Point(441, 814);
+            this.Motor1_Velocity.Location = new System.Drawing.Point(441, 793);
             this.Motor1_Velocity.Name = "Motor1_Velocity";
             this.Motor1_Velocity.Size = new System.Drawing.Size(100, 20);
             this.Motor1_Velocity.TabIndex = 37;
@@ -1209,7 +1221,7 @@
             // Motor1_Acceleration
             // 
             this.Motor1_Acceleration.Enabled = false;
-            this.Motor1_Acceleration.Location = new System.Drawing.Point(441, 862);
+            this.Motor1_Acceleration.Location = new System.Drawing.Point(441, 830);
             this.Motor1_Acceleration.Name = "Motor1_Acceleration";
             this.Motor1_Acceleration.Size = new System.Drawing.Size(100, 20);
             this.Motor1_Acceleration.TabIndex = 38;
@@ -1218,7 +1230,7 @@
             // bt_Motor1_Save_Setting
             // 
             this.bt_Motor1_Save_Setting.Enabled = false;
-            this.bt_Motor1_Save_Setting.Location = new System.Drawing.Point(441, 887);
+            this.bt_Motor1_Save_Setting.Location = new System.Drawing.Point(441, 940);
             this.bt_Motor1_Save_Setting.Name = "bt_Motor1_Save_Setting";
             this.bt_Motor1_Save_Setting.Size = new System.Drawing.Size(100, 23);
             this.bt_Motor1_Save_Setting.TabIndex = 41;
@@ -1232,15 +1244,15 @@
             this.Logging_Period.Name = "Logging_Period";
             this.Logging_Period.Size = new System.Drawing.Size(100, 20);
             this.Logging_Period.TabIndex = 42;
-            this.Logging_Period.Text = "6";
+            this.Logging_Period.Text = "60";
             // 
             // Toggle_Delay
             // 
-            this.Toggle_Delay.Location = new System.Drawing.Point(12, 838);
+            this.Toggle_Delay.Location = new System.Drawing.Point(12, 852);
             this.Toggle_Delay.Name = "Toggle_Delay";
             this.Toggle_Delay.Size = new System.Drawing.Size(100, 20);
             this.Toggle_Delay.TabIndex = 43;
-            this.Toggle_Delay.Text = "1";
+            this.Toggle_Delay.Text = "5";
             // 
             // lb_Logging_Period
             // 
@@ -1263,7 +1275,7 @@
             // lb_Motor1_Velocity
             // 
             this.lb_Motor1_Velocity.AutoSize = true;
-            this.lb_Motor1_Velocity.Location = new System.Drawing.Point(438, 798);
+            this.lb_Motor1_Velocity.Location = new System.Drawing.Point(440, 777);
             this.lb_Motor1_Velocity.Name = "lb_Motor1_Velocity";
             this.lb_Motor1_Velocity.Size = new System.Drawing.Size(44, 13);
             this.lb_Motor1_Velocity.TabIndex = 46;
@@ -1272,7 +1284,7 @@
             // lb_Motor1_Acceleration
             // 
             this.lb_Motor1_Acceleration.AutoSize = true;
-            this.lb_Motor1_Acceleration.Location = new System.Drawing.Point(443, 846);
+            this.lb_Motor1_Acceleration.Location = new System.Drawing.Point(440, 814);
             this.lb_Motor1_Acceleration.Name = "lb_Motor1_Acceleration";
             this.lb_Motor1_Acceleration.Size = new System.Drawing.Size(66, 13);
             this.lb_Motor1_Acceleration.TabIndex = 47;
@@ -1334,7 +1346,7 @@
             // lb_Motor2_Acceleration
             // 
             this.lb_Motor2_Acceleration.AutoSize = true;
-            this.lb_Motor2_Acceleration.Location = new System.Drawing.Point(615, 846);
+            this.lb_Motor2_Acceleration.Location = new System.Drawing.Point(612, 814);
             this.lb_Motor2_Acceleration.Name = "lb_Motor2_Acceleration";
             this.lb_Motor2_Acceleration.Size = new System.Drawing.Size(66, 13);
             this.lb_Motor2_Acceleration.TabIndex = 57;
@@ -1343,7 +1355,7 @@
             // lb_Motor2_Velocity
             // 
             this.lb_Motor2_Velocity.AutoSize = true;
-            this.lb_Motor2_Velocity.Location = new System.Drawing.Point(610, 798);
+            this.lb_Motor2_Velocity.Location = new System.Drawing.Point(612, 777);
             this.lb_Motor2_Velocity.Name = "lb_Motor2_Velocity";
             this.lb_Motor2_Velocity.Size = new System.Drawing.Size(44, 13);
             this.lb_Motor2_Velocity.TabIndex = 56;
@@ -1352,7 +1364,7 @@
             // bt_Motor2_Save_Setting
             // 
             this.bt_Motor2_Save_Setting.Enabled = false;
-            this.bt_Motor2_Save_Setting.Location = new System.Drawing.Point(613, 887);
+            this.bt_Motor2_Save_Setting.Location = new System.Drawing.Point(613, 940);
             this.bt_Motor2_Save_Setting.Name = "bt_Motor2_Save_Setting";
             this.bt_Motor2_Save_Setting.Size = new System.Drawing.Size(100, 23);
             this.bt_Motor2_Save_Setting.TabIndex = 55;
@@ -1363,7 +1375,7 @@
             // Motor2_Acceleration
             // 
             this.Motor2_Acceleration.Enabled = false;
-            this.Motor2_Acceleration.Location = new System.Drawing.Point(613, 862);
+            this.Motor2_Acceleration.Location = new System.Drawing.Point(613, 830);
             this.Motor2_Acceleration.Name = "Motor2_Acceleration";
             this.Motor2_Acceleration.Size = new System.Drawing.Size(100, 20);
             this.Motor2_Acceleration.TabIndex = 54;
@@ -1372,7 +1384,7 @@
             // Motor2_Velocity
             // 
             this.Motor2_Velocity.Enabled = false;
-            this.Motor2_Velocity.Location = new System.Drawing.Point(613, 814);
+            this.Motor2_Velocity.Location = new System.Drawing.Point(613, 793);
             this.Motor2_Velocity.Name = "Motor2_Velocity";
             this.Motor2_Velocity.Size = new System.Drawing.Size(100, 20);
             this.Motor2_Velocity.TabIndex = 53;
@@ -1422,7 +1434,7 @@
             // lb_Motor3_Acceleration
             // 
             this.lb_Motor3_Acceleration.AutoSize = true;
-            this.lb_Motor3_Acceleration.Location = new System.Drawing.Point(780, 846);
+            this.lb_Motor3_Acceleration.Location = new System.Drawing.Point(777, 814);
             this.lb_Motor3_Acceleration.Name = "lb_Motor3_Acceleration";
             this.lb_Motor3_Acceleration.Size = new System.Drawing.Size(66, 13);
             this.lb_Motor3_Acceleration.TabIndex = 66;
@@ -1431,7 +1443,7 @@
             // lb_Motor3_Velocity
             // 
             this.lb_Motor3_Velocity.AutoSize = true;
-            this.lb_Motor3_Velocity.Location = new System.Drawing.Point(775, 798);
+            this.lb_Motor3_Velocity.Location = new System.Drawing.Point(777, 777);
             this.lb_Motor3_Velocity.Name = "lb_Motor3_Velocity";
             this.lb_Motor3_Velocity.Size = new System.Drawing.Size(44, 13);
             this.lb_Motor3_Velocity.TabIndex = 65;
@@ -1440,7 +1452,7 @@
             // bt_Motor3_Save_Setting
             // 
             this.bt_Motor3_Save_Setting.Enabled = false;
-            this.bt_Motor3_Save_Setting.Location = new System.Drawing.Point(778, 887);
+            this.bt_Motor3_Save_Setting.Location = new System.Drawing.Point(778, 940);
             this.bt_Motor3_Save_Setting.Name = "bt_Motor3_Save_Setting";
             this.bt_Motor3_Save_Setting.Size = new System.Drawing.Size(100, 23);
             this.bt_Motor3_Save_Setting.TabIndex = 64;
@@ -1451,20 +1463,20 @@
             // Motor3_Acceleration
             // 
             this.Motor3_Acceleration.Enabled = false;
-            this.Motor3_Acceleration.Location = new System.Drawing.Point(778, 862);
+            this.Motor3_Acceleration.Location = new System.Drawing.Point(778, 830);
             this.Motor3_Acceleration.Name = "Motor3_Acceleration";
             this.Motor3_Acceleration.Size = new System.Drawing.Size(100, 20);
             this.Motor3_Acceleration.TabIndex = 63;
-            this.Motor3_Acceleration.Text = "1000";
+            this.Motor3_Acceleration.Text = "60";
             // 
             // Motor3_Velocity
             // 
             this.Motor3_Velocity.Enabled = false;
-            this.Motor3_Velocity.Location = new System.Drawing.Point(778, 814);
+            this.Motor3_Velocity.Location = new System.Drawing.Point(778, 793);
             this.Motor3_Velocity.Name = "Motor3_Velocity";
             this.Motor3_Velocity.Size = new System.Drawing.Size(100, 20);
             this.Motor3_Velocity.TabIndex = 62;
-            this.Motor3_Velocity.Text = "2000";
+            this.Motor3_Velocity.Text = "60";
             // 
             // lb_Motor_Controller3
             // 
@@ -1486,11 +1498,125 @@
             this.bt_Motor3_Setup.UseVisualStyleBackColor = true;
             this.bt_Motor3_Setup.Click += new System.EventHandler(this.bt_Motor3_Setup_Click);
             // 
+            // lb_Motor1_distance
+            // 
+            this.lb_Motor1_distance.AutoSize = true;
+            this.lb_Motor1_distance.Location = new System.Drawing.Point(440, 898);
+            this.lb_Motor1_distance.Name = "lb_Motor1_distance";
+            this.lb_Motor1_distance.Size = new System.Drawing.Size(49, 13);
+            this.lb_Motor1_distance.TabIndex = 69;
+            this.lb_Motor1_distance.Text = "Distance";
+            // 
+            // lb_Motor2_distance
+            // 
+            this.lb_Motor2_distance.AutoSize = true;
+            this.lb_Motor2_distance.Location = new System.Drawing.Point(612, 898);
+            this.lb_Motor2_distance.Name = "lb_Motor2_distance";
+            this.lb_Motor2_distance.Size = new System.Drawing.Size(49, 13);
+            this.lb_Motor2_distance.TabIndex = 70;
+            this.lb_Motor2_distance.Text = "Distance";
+            // 
+            // lb_Motor3_distance
+            // 
+            this.lb_Motor3_distance.AutoSize = true;
+            this.lb_Motor3_distance.Location = new System.Drawing.Point(777, 898);
+            this.lb_Motor3_distance.Name = "lb_Motor3_distance";
+            this.lb_Motor3_distance.Size = new System.Drawing.Size(49, 13);
+            this.lb_Motor3_distance.TabIndex = 71;
+            this.lb_Motor3_distance.Text = "Distance";
+            // 
+            // Motor1_Distance
+            // 
+            this.Motor1_Distance.Location = new System.Drawing.Point(441, 914);
+            this.Motor1_Distance.Name = "Motor1_Distance";
+            this.Motor1_Distance.Size = new System.Drawing.Size(100, 20);
+            this.Motor1_Distance.TabIndex = 72;
+            this.Motor1_Distance.Text = "12";
+            // 
+            // Motor2_Distance
+            // 
+            this.Motor2_Distance.Location = new System.Drawing.Point(613, 914);
+            this.Motor2_Distance.Name = "Motor2_Distance";
+            this.Motor2_Distance.Size = new System.Drawing.Size(100, 20);
+            this.Motor2_Distance.TabIndex = 73;
+            this.Motor2_Distance.Text = "12";
+            // 
+            // Motor3_Distance
+            // 
+            this.Motor3_Distance.Location = new System.Drawing.Point(778, 914);
+            this.Motor3_Distance.Name = "Motor3_Distance";
+            this.Motor3_Distance.Size = new System.Drawing.Size(100, 20);
+            this.Motor3_Distance.TabIndex = 74;
+            this.Motor3_Distance.Text = "2000";
+            // 
+            // Motor1_Deacceleration
+            // 
+            this.Motor1_Deacceleration.Location = new System.Drawing.Point(443, 871);
+            this.Motor1_Deacceleration.Name = "Motor1_Deacceleration";
+            this.Motor1_Deacceleration.Size = new System.Drawing.Size(100, 20);
+            this.Motor1_Deacceleration.TabIndex = 75;
+            this.Motor1_Deacceleration.Text = "1000";
+            // 
+            // lb_Motor1_Deacceleration
+            // 
+            this.lb_Motor1_Deacceleration.AutoSize = true;
+            this.lb_Motor1_Deacceleration.Location = new System.Drawing.Point(440, 855);
+            this.lb_Motor1_Deacceleration.Name = "lb_Motor1_Deacceleration";
+            this.lb_Motor1_Deacceleration.Size = new System.Drawing.Size(79, 13);
+            this.lb_Motor1_Deacceleration.TabIndex = 76;
+            this.lb_Motor1_Deacceleration.Text = "Deacceleration";
+            // 
+            // lb_Motor2_Deacceleration
+            // 
+            this.lb_Motor2_Deacceleration.AutoSize = true;
+            this.lb_Motor2_Deacceleration.Location = new System.Drawing.Point(612, 855);
+            this.lb_Motor2_Deacceleration.Name = "lb_Motor2_Deacceleration";
+            this.lb_Motor2_Deacceleration.Size = new System.Drawing.Size(79, 13);
+            this.lb_Motor2_Deacceleration.TabIndex = 77;
+            this.lb_Motor2_Deacceleration.Text = "Deacceleration";
+            // 
+            // lb_Motor3_Deacceleration
+            // 
+            this.lb_Motor3_Deacceleration.AutoSize = true;
+            this.lb_Motor3_Deacceleration.Location = new System.Drawing.Point(777, 855);
+            this.lb_Motor3_Deacceleration.Name = "lb_Motor3_Deacceleration";
+            this.lb_Motor3_Deacceleration.Size = new System.Drawing.Size(79, 13);
+            this.lb_Motor3_Deacceleration.TabIndex = 78;
+            this.lb_Motor3_Deacceleration.Text = "Deacceleration";
+            // 
+            // Motor2_Deacceleration
+            // 
+            this.Motor2_Deacceleration.Location = new System.Drawing.Point(613, 871);
+            this.Motor2_Deacceleration.Name = "Motor2_Deacceleration";
+            this.Motor2_Deacceleration.Size = new System.Drawing.Size(100, 20);
+            this.Motor2_Deacceleration.TabIndex = 79;
+            this.Motor2_Deacceleration.Text = "1000";
+            // 
+            // Motor3_Deacceleration
+            // 
+            this.Motor3_Deacceleration.Location = new System.Drawing.Point(778, 871);
+            this.Motor3_Deacceleration.Name = "Motor3_Deacceleration";
+            this.Motor3_Deacceleration.Size = new System.Drawing.Size(100, 20);
+            this.Motor3_Deacceleration.TabIndex = 80;
+            this.Motor3_Deacceleration.Text = "600";
+            // 
             // Interfacer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1152, 974);
+            this.ClientSize = new System.Drawing.Size(1159, 1053);
+            this.Controls.Add(this.Motor3_Deacceleration);
+            this.Controls.Add(this.Motor2_Deacceleration);
+            this.Controls.Add(this.lb_Motor3_Deacceleration);
+            this.Controls.Add(this.lb_Motor2_Deacceleration);
+            this.Controls.Add(this.lb_Motor1_Deacceleration);
+            this.Controls.Add(this.Motor1_Deacceleration);
+            this.Controls.Add(this.Motor3_Distance);
+            this.Controls.Add(this.Motor2_Distance);
+            this.Controls.Add(this.Motor1_Distance);
+            this.Controls.Add(this.lb_Motor3_distance);
+            this.Controls.Add(this.lb_Motor2_distance);
+            this.Controls.Add(this.lb_Motor1_distance);
             this.Controls.Add(this.cb_Motor3_Enabled);
             this.Controls.Add(this.Motor3_Status);
             this.Controls.Add(this.lb_Motor3_Acceleration);
@@ -1804,6 +1930,18 @@
         private System.Windows.Forms.TextBox Motor3_Velocity;
         private System.Windows.Forms.Label lb_Motor_Controller3;
         private System.Windows.Forms.Button bt_Motor3_Setup;
+        private System.Windows.Forms.Label lb_Motor1_distance;
+        private System.Windows.Forms.Label lb_Motor2_distance;
+        private System.Windows.Forms.Label lb_Motor3_distance;
+        private System.Windows.Forms.TextBox Motor1_Distance;
+        private System.Windows.Forms.TextBox Motor2_Distance;
+        private System.Windows.Forms.TextBox Motor3_Distance;
+        private System.Windows.Forms.TextBox Motor1_Deacceleration;
+        private System.Windows.Forms.Label lb_Motor1_Deacceleration;
+        private System.Windows.Forms.Label lb_Motor2_Deacceleration;
+        private System.Windows.Forms.Label lb_Motor3_Deacceleration;
+        private System.Windows.Forms.TextBox Motor2_Deacceleration;
+        private System.Windows.Forms.TextBox Motor3_Deacceleration;
     }
 }
 

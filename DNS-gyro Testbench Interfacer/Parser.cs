@@ -613,9 +613,10 @@ namespace DNS_gyro_Testbench_Interfacer
                             if (Carriers[0].Logg_Active)
                             {
                                 Carriers[0].Logg_Target.WriteLine(serialData);
-                                //TODO EXEPTIONS
-                            }
-                            break;
+                                    //TODO EXEPTIONS
+                                    //TODO  ADD TIMESTAMP string.Format("{0:yyyy-MM-dd-HH-mm-ss}", DateTime.Now) + 
+                                }
+                                break;
 
                         case "21":
                             if (Carriers[1].Logg_Active)
